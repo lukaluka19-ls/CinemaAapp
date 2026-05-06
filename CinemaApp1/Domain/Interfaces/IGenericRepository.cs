@@ -4,7 +4,9 @@ using System.Text;
 
 namespace CinemaApp.Domain.Interfaces
 {
-    internal class IGenericRepository
+    public class IGenericRepository
     {
+        
+
     }
 }
