@@ -5,11 +5,13 @@ using System.Text;
 
 namespace CinemaApp.Domain.Interfaces
 {
-    public interface IUserRepository
+    public interface IUserRepository : IGenericRepository<ApplicationUser>
     {
-        Task<IEnumerable<ApplicationUser>> GetAllUsersAsync();
-        Task<ApplicationUser> GetUserByIdAsync(Guid id);
-        Task<ApplicationUser> GetUserByFirstName(string firstname);
-        
+        Task<ApplicationUser?>GetByEmailOrUsernameAsync(string emailOrUsername);
+        Task<ApplicationUser?> GetByUsernameAsync(string email);
+        Task UpdatePasswordAsync(int userId, string newPasswordHas);
+        Task BlockUserAsync(int userId);
+        Task UnblockUserAsync(int userId);
+
     }
 }
