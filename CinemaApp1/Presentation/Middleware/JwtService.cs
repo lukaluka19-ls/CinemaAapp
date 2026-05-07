@@ -1,4 +1,5 @@
 ﻿using CinemaApp.Data;
+using Microsoft.AspNetCore.Identity.Data;
 
 namespace CinemaApp1.Presentation.Middleware
 {
