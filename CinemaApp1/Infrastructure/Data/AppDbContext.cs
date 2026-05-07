@@ -9,7 +9,7 @@ namespace CinemaApp.Data
             : base(options)
         {
         }
-        public DbSet<ApplicationUser> Users { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Seat> Seats { get; set; }

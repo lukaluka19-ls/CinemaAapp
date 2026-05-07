@@ -1,18 +1,13 @@
-﻿using CinemaApp.Domain.Models;
-using CinemaApp1.Application.DTOs.Movie;
-using System.ComponentModel.DataAnnotations;
-
-namespace CinemaApp1.Application.DTOs.Screening
+﻿public class ScreeningResponseDTO
 {
-    public class ScreeningResponseDTO
-    {
-        public int Id { get; set; }
-        public DateTime DateTime { get; set; }
-        public decimal ticketPrice { get; set; }
-        public int TotalSeats { get; set; }
-        public int AvailableSeats { get; set; }
-        public bool IsPast { get; set; }
-        public MovieResponseDTO Movie { get; set; }
-
-    }
+    public int Id { get; set; }
+    public int MovieId { get; set; }
+    public string MovieName { get; set; } = null!;
+    public string? PosterImageUrl { get; set; }
+    public string GenreName { get; set; } = null!;
+    public DateTime DateTime { get; set; }
+    public decimal TicketPrice { get; set; }
+    public int TotalSeats { get; set; }
+    public int AvailableSeats { get; set; }
+    public double? AverageRating { get; set; }
 }

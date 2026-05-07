@@ -1,22 +1,16 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.ComponentModel.DataAnnotations;
+﻿using CinemaApp.Domain.Models;
 
-namespace CinemaApp.Domain.Models
+public class Movie
 {
-    public class Movie
-    {
-        public int Id { get; set; }
-        
-        public string Title { get; set; }
-        public string GenreId { get; set; }
-        public int MovieDuration { get; set; }
-        public double AverageRating { get; set; }
-        public string OriginalTitle { get; set; }
+    public int Id { get; set; }
+    public string Name { get; set; } = null!;
+    public string OriginalName { get; set; } = null!;
+    public int Duration { get; set; }
+    public string? PosterImage { get; set; }  // path ili URL do slike
+    public int GenreId { get; set; }
 
-
-        //Key za genere jer ima many movies
-        public Genre Genre { get; set; }
-
-        public ICollection<MovieScreening> MovieScreenings { get; set; } = new List<MovieScreening>();
-    }
+    // navigaciona svojstva
+    public Genre Genre { get; set; } = null!;
+    public ICollection<MovieScreening> Screenings { get; set; } = new List<MovieScreening>();
+    public ICollection<Rating> Ratings { get; set; } = new List<Rating>();
 }

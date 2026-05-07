@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CinemaApp1.Application.DTOs.Auth
+﻿public class UserResponseDto
 {
-    internal class UserResponseDto
-    {
-    }
+    public int Id { get; set; }
+    public string Name { get; set; } = null!;
+    public string Email { get; set; } = null!;
+    public DateTime DateOfBirth { get; set; }
+    public string Role { get; set; } = null!;
 }

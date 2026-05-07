@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CinemaApp1.Application.DTOs.Auth
+﻿public class AuthResponseDto
 {
-    internal class AuthResponseDto
-    {
-    }
+    public string Token { get; set; } = null!;
+    public string Name { get; set; } = null!;
+    public string Email { get; set; } = null!;
+    public string Role { get; set; } = null!;
 }

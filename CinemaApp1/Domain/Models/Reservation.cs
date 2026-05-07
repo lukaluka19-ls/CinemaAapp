@@ -1,24 +1,20 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CinemaApp.Domain.Models;
 
-namespace CinemaApp.Domain.Models
+public class Reservation
 {
-    public class Reservation
-    {
-        [Key]
-        public int Id { get; set; }
-        public string ConfirmationCode { get; set; }
-        public string UserId { get; set; }
-        public int MovieScreeningId { get; set; }
-        public string ReservationName { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public int TotalPrice { get; set; }
-        public bool Status { get; set; }
+    public int Id { get; set; }
+    public int? UserId { get; set; }          // null ako je guest
+    public string? GuestEmail { get; set; }   // null ako je auth user
+    public int ScreeningId { get; set; }
+    public string UniqueCode { get; set; } = null!;
+    public decimal TotalPrice { get; set; }
+    public bool DiscountApplied { get; set; }
+    public bool IsCanceled { get; set; }
+    public DateTime CreatedAt { get; set; }
 
-        // Foreign keys
-        public ApplicationUser User { get; set; }
-        public MovieScreening MovieScreening { get; set; }
-
-        //N:N
-        public ICollection<ReservationSeat> ReservationSeats { get; set; } = new List<ReservationSeat>();
-    }
+    // navigaciona svojstva
+    public User? User { get; set; }
+    public MovieScreening Screening { get; set; } = null!;
+    public ICollection<ReservationSeat> ReservationSeats { get; set; } = new List<ReservationSeat>();
+    public Rating? Rating { get; set; }
 }

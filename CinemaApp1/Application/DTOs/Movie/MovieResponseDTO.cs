@@ -1,18 +1,11 @@
-﻿using CinemaApp1.Application.DTOs.Genre;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CinemaApp1.Application.DTOs.Movie
+﻿public class MovieResponseDTO
 {
-    public class MovieResponseDTO
-    {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public string OriginalTitle { get; set; }
-        public int Duration { get; set; }
-        public string? PosterPath { get; set; }
-        public double AverageRating { get; set; }
-        public GenreResponseDTO? Genre { get; set; }
-    }
+    public int Id { get; set; }
+    public string Name { get; set; } = null!;
+    public string OriginalName { get; set; } = null!;
+    public int Duration { get; set; }
+    public string? PosterImageUrl { get; set; }
+    public int GenreId { get; set; }
+    public string GenreName { get; set; } = null!;
+    public double? AverageRating { get; set; }
 }

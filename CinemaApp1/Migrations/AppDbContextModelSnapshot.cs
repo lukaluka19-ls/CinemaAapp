@@ -22,81 +22,7 @@ namespace CinemaApp1.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("CinemaApp.Domain.Models.ApplicationUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("isBlocked")
-                        .HasColumnType("boolean");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("CinemaApp.Domain.Models.Genre", b =>
+            modelBuilder.Entity("Genre", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -113,7 +39,7 @@ namespace CinemaApp1.Migrations
                     b.ToTable("Genres");
                 });
 
-            modelBuilder.Entity("CinemaApp.Domain.Models.Movie", b =>
+            modelBuilder.Entity("Movie", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -121,35 +47,31 @@ namespace CinemaApp1.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<double>("AverageRating")
-                        .HasColumnType("double precision");
+                    b.Property<int>("Duration")
+                        .HasColumnType("integer");
 
-                    b.Property<string>("GenreId")
+                    b.Property<int>("GenreId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("GenreId1")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("MovieDuration")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("OriginalTitle")
+                    b.Property<string>("OriginalName")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
+                    b.Property<string>("PosterImage")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GenreId1");
+                    b.HasIndex("GenreId");
 
                     b.ToTable("Movies");
                 });
 
-            modelBuilder.Entity("CinemaApp.Domain.Models.MovieScreening", b =>
+            modelBuilder.Entity("MovieScreening", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -157,17 +79,11 @@ namespace CinemaApp1.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AvailableSeats")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("EndingTime")
+                    b.Property<DateTime>("DateTime")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("MovieId")
                         .HasColumnType("integer");
-
-                    b.Property<DateTime>("StartingTime")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<decimal>("TicketPrice")
                         .HasColumnType("numeric");
@@ -182,7 +98,7 @@ namespace CinemaApp1.Migrations
                     b.ToTable("MovieScreenings");
                 });
 
-            modelBuilder.Entity("CinemaApp.Domain.Models.Reservation", b =>
+            modelBuilder.Entity("Rating", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -190,40 +106,76 @@ namespace CinemaApp1.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ConfirmationCode")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ReservationId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Stars")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MovieId");
+
+                    b.HasIndex("ReservationId")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Rating");
+                });
+
+            modelBuilder.Entity("Reservation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("MovieScreeningId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("ReservationName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("Status")
+                    b.Property<bool>("DiscountApplied")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("TotalPrice")
+                    b.Property<string>("GuestEmail")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsCanceled")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("ScreeningId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("UserId")
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("UniqueCode")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MovieScreeningId");
+                    b.HasIndex("ScreeningId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Reservations");
                 });
 
-            modelBuilder.Entity("CinemaApp.Domain.Models.ReservationSeat", b =>
+            modelBuilder.Entity("ReservationSeat", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -231,11 +183,7 @@ namespace CinemaApp1.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ReservationId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("ReservationId1")
+                    b.Property<int>("ReservationId")
                         .HasColumnType("integer");
 
                     b.Property<int>("SeatId")
@@ -243,14 +191,14 @@ namespace CinemaApp1.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ReservationId1");
+                    b.HasIndex("ReservationId");
 
                     b.HasIndex("SeatId");
 
                     b.ToTable("ReservationSeats");
                 });
 
-            modelBuilder.Entity("CinemaApp.Domain.Models.Seat", b =>
+            modelBuilder.Entity("Seat", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -258,42 +206,83 @@ namespace CinemaApp1.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("IsReserved")
+                    b.Property<bool>("IsOccupied")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("MovieScreeningId")
+                    b.Property<int>("ScreeningId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Row")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("SeatNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("SeatNumber")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MovieScreeningId");
+                    b.HasIndex("ScreeningId");
 
                     b.ToTable("Seats");
                 });
 
-            modelBuilder.Entity("CinemaApp.Domain.Models.Movie", b =>
+            modelBuilder.Entity("User", b =>
                 {
-                    b.HasOne("CinemaApp.Domain.Models.Genre", "Genre")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsBlocked")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsVerified")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ResetPasswordToken")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ResetPasswordTokenExpiry")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("VerificationToken")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Movie", b =>
+                {
+                    b.HasOne("Genre", "Genre")
                         .WithMany("Movies")
-                        .HasForeignKey("GenreId1")
+                        .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Genre");
                 });
 
-            modelBuilder.Entity("CinemaApp.Domain.Models.MovieScreening", b =>
+            modelBuilder.Entity("MovieScreening", b =>
                 {
-                    b.HasOne("CinemaApp.Domain.Models.Movie", "Movie")
-                        .WithMany("MovieScreenings")
+                    b.HasOne("Movie", "Movie")
+                        .WithMany("Screenings")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -301,34 +290,59 @@ namespace CinemaApp1.Migrations
                     b.Navigation("Movie");
                 });
 
-            modelBuilder.Entity("CinemaApp.Domain.Models.Reservation", b =>
+            modelBuilder.Entity("Rating", b =>
                 {
-                    b.HasOne("CinemaApp.Domain.Models.MovieScreening", "MovieScreening")
-                        .WithMany("Reservations")
-                        .HasForeignKey("MovieScreeningId")
+                    b.HasOne("Movie", "Movie")
+                        .WithMany("Ratings")
+                        .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CinemaApp.Domain.Models.ApplicationUser", "User")
-                        .WithMany("Reservations")
+                    b.HasOne("Reservation", "Reservation")
+                        .WithOne("Rating")
+                        .HasForeignKey("Rating", "ReservationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("User", "User")
+                        .WithMany("Ratings")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("MovieScreening");
+                    b.Navigation("Movie");
+
+                    b.Navigation("Reservation");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("CinemaApp.Domain.Models.ReservationSeat", b =>
+            modelBuilder.Entity("Reservation", b =>
                 {
-                    b.HasOne("CinemaApp.Domain.Models.Reservation", "Reservation")
-                        .WithMany("ReservationSeats")
-                        .HasForeignKey("ReservationId1")
+                    b.HasOne("MovieScreening", "Screening")
+                        .WithMany("Reservations")
+                        .HasForeignKey("ScreeningId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CinemaApp.Domain.Models.Seat", "Seat")
+                    b.HasOne("User", "User")
+                        .WithMany("Reservations")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Screening");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ReservationSeat", b =>
+                {
+                    b.HasOne("Reservation", "Reservation")
+                        .WithMany("ReservationSeats")
+                        .HasForeignKey("ReservationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Seat", "Seat")
                         .WithMany("ReservationSeats")
                         .HasForeignKey("SeatId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -339,47 +353,53 @@ namespace CinemaApp1.Migrations
                     b.Navigation("Seat");
                 });
 
-            modelBuilder.Entity("CinemaApp.Domain.Models.Seat", b =>
+            modelBuilder.Entity("Seat", b =>
                 {
-                    b.HasOne("CinemaApp.Domain.Models.MovieScreening", "MovieScreening")
+                    b.HasOne("MovieScreening", "Screening")
                         .WithMany("Seats")
-                        .HasForeignKey("MovieScreeningId")
+                        .HasForeignKey("ScreeningId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("MovieScreening");
+                    b.Navigation("Screening");
                 });
 
-            modelBuilder.Entity("CinemaApp.Domain.Models.ApplicationUser", b =>
-                {
-                    b.Navigation("Reservations");
-                });
-
-            modelBuilder.Entity("CinemaApp.Domain.Models.Genre", b =>
+            modelBuilder.Entity("Genre", b =>
                 {
                     b.Navigation("Movies");
                 });
 
-            modelBuilder.Entity("CinemaApp.Domain.Models.Movie", b =>
+            modelBuilder.Entity("Movie", b =>
                 {
-                    b.Navigation("MovieScreenings");
+                    b.Navigation("Ratings");
+
+                    b.Navigation("Screenings");
                 });
 
-            modelBuilder.Entity("CinemaApp.Domain.Models.MovieScreening", b =>
+            modelBuilder.Entity("MovieScreening", b =>
                 {
                     b.Navigation("Reservations");
 
                     b.Navigation("Seats");
                 });
 
-            modelBuilder.Entity("CinemaApp.Domain.Models.Reservation", b =>
+            modelBuilder.Entity("Reservation", b =>
+                {
+                    b.Navigation("Rating");
+
+                    b.Navigation("ReservationSeats");
+                });
+
+            modelBuilder.Entity("Seat", b =>
                 {
                     b.Navigation("ReservationSeats");
                 });
 
-            modelBuilder.Entity("CinemaApp.Domain.Models.Seat", b =>
+            modelBuilder.Entity("User", b =>
                 {
-                    b.Navigation("ReservationSeats");
+                    b.Navigation("Ratings");
+
+                    b.Navigation("Reservations");
                 });
 #pragma warning restore 612, 618
         }
