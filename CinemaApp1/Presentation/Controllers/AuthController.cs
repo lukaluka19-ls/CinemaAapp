@@ -1,13 +1,27 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CinemaApp1.Presentation.Middleware;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.AspNetCore.Mvc;
 
-namespace CinemaApp.Presentation.Controllers
+namespace CinemaApp1.Presentation.Controllers
 {
-    public class AuthController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AuthController : ControllerBase
     {
-        public IActionResult Index()
-        {
-            return View(
-                );
-        }
+        private readonly JwtService _jwtService;
+        public AuthController(JwtService jwtService) =>
+            _jwtService = jwtService;
     }
+
+    [AllowAnonymous]
+    [HttpPost("login")]
+    public async Task<IActionResult><LoginResponseModel>>Login(LoginRequestModel request)
+        {
+            var response = await _jwtService.Authenticate(request);
+            if (response == null)
+                return Unauthorized(new { message = "Invalid username or password" });
+            return Ok(response);
+        }
 }
