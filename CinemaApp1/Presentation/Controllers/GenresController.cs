@@ -1,12 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CinemaApp1.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CinemaApp.Presentation.Controllers
 {
     public class GenresController : Controller
     {
-        public IActionResult Index()
+        private readonly IGenreService _service;
+        public GenresController(IGenreService service)
         {
-            return View();
+            _service = service;
         }
-    }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var genres = await _service.GetAllAsync();
+            return View(genres);
+        }
+
+    } 
 }

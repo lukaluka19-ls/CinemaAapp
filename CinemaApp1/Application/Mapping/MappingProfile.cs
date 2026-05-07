@@ -71,8 +71,8 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.Seats, opt => opt.MapFrom(src => src.ReservationSeats.Select(rs => rs.Seat).ToList()))
             .ForMember(dest => dest.Rating, opt => opt.MapFrom(src => src.Rating != null ? src.Rating.Stars : (int?)null));
 
-        CreateMap<User, ConsumerResponseDTO>();
-        CreateMap<User, ConsumerListDTO>();
+        CreateMap<User, UserResponseDTO>();
+        CreateMap<User, UserListDTO>();
 
         CreateMap<Rating, RatingResponseDTO>()
             .ForMember(dest => dest.MovieName,

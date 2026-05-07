@@ -1,15 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-public class ScreeningCreateDTO
+﻿public class ScreeningCreateDTO
 {
-    [Required]
+    public int Id { get; set; }
     public int MovieId { get; set; }
-    [Required]
+    public string MovieName { get; set; } = null!;
+    public string? PosterImageUrl { get; set; }
+    public string GenreName { get; set; } = null!;
     public DateTime DateTime { get; set; }
-    [Required]
-    [Range(0.01, 10000)]
     public decimal TicketPrice { get; set; }
-    [Required]
-    [Range(1, 500)]
     public int TotalSeats { get; set; }
+    public int AvailableSeats { get; set; }
+    public double? AverageRating { get; set; }
 }

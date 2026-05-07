@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-public class BlockConsumerDTO
+public class BlockUserDTO
 {
     [Required]
     public bool IsBlocked { get; set; }

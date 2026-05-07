@@ -1,4 +1,4 @@
-﻿public class ConsumerListDTO
+﻿public class UserListDTO
 {
     public int Id { get; set; }
     public string Name { get; set; } = null!;
