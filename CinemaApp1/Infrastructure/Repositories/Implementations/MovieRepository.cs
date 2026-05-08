@@ -51,7 +51,7 @@ namespace CinemaApp.Infrastructure.Repositories.Implementations
             return await _context.Movies.Include(m => m.Ratings).ToListAsync();
         }
 
-        public async Task<Movie> GetByIdAsync(int id)
+        public async Task<Movie?> GetByIdAsync(int id)
         {
             return await _genericRepository.GetByIdAsync(id);
         }

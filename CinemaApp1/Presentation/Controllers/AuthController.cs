@@ -22,14 +22,15 @@ namespace CinemaApp1.Presentation.Controllers
             return Ok(response);
         }
 
-        [Authorize]
-        [HttpPost("register")]
+        //[Authorize]
+        //[HttpPost("register")]
 
-        public async Task<IActionResult> Register(RegisterDTO request)
-        {
-            var response = await _jwtService.Register(request);
-            if (response == null)
-                return BadRequest(new { message = "User already exists" });
-            return Ok(response);
-        }
+        //public async Task<IActionResult> Register(RegisterDTO request)
+        //{
+        //    var response = await _jwtService.Register(request);
+        //    if (response == null)
+        //        return BadRequest(new { message = "User already exists" });
+        //    return Ok(response);
+        //}
+    }
 }

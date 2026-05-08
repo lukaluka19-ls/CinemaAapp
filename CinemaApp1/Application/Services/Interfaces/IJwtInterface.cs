@@ -1,7 +1,4 @@
-﻿namespace CinemaApp1.Infrastructure.Auth
+﻿public interface IJwtService
 {
-    public interface IJwtService
-    {
-        Task<AuthResponseDto?> Authenticate(LoginDTO request);
-    }
+    Task<AuthResponseDto?> Authenticate(LoginDTO request);
 }

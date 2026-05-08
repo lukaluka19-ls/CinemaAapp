@@ -20,14 +20,15 @@ namespace CinemaApp1.Infrastructure
             services.AddDbContext<AppDbContext>(options =>
                 options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
-           
-            //services.AddScoped<IGenreRepository, GenreRepository>();
-            //services.AddScoped<IMovieRepository, MovieRepository>();
-            //services.AddScoped<IScreeningRepository, ScreeningRepository>();
-            //services.AddScoped<ISeatRepository, SeatRepository>();
-            //services.AddScoped<IReservationRepository, ReservationRepository>();
-            //services.AddScoped<IRatingRepository, RatingRepository>();
-            //services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddScoped<IGenreRepository, GenreRepository>();
+            services.AddScoped<IMovieRepository, MovieRepository>();
+            services.AddScoped<IScreeningRepository, ScreeningRepository>();
+            services.AddScoped<ISeatRepository, SeatRepository>();
+            services.AddScoped<IReservationRepository, ReservationRepository>();
+            services.AddScoped<IRatingRepository, RatingRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IPasswordHashService, PasswordHashService>();
 
             // Services
             services.AddScoped<IJwtService, JwtService>();
