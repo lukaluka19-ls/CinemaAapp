@@ -1,12 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CinemaApp1.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CinemaApp.Presentation.Controllers
 {
     public class SeatsController : Controller
     {
-        public IActionResult Index()
+        private readonly ISeatService _service;
+        public SeatsController(ISeatService service) =>
+            _service = service;
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
         {
-            return View();
+            var response = await _service.GetAllAsync();
+            return Ok(response);
         }
     }
 }

@@ -1,51 +1,57 @@
 ﻿using AutoMapper;
-using CinemaApp1.Application.Services.Interfaces;
+using CinemaApp.Domain.Interfaces;
 
-namespace CinemaApp1.Application.Services.Implementation
+public class ScreeningService : IScreeningService
 {
-    public class ScreeningService : IScreeningService
+    private readonly IScreeningRepository _screeningRepository;
+    private readonly IMapper _mapper;
+
+    public ScreeningService(IScreeningRepository screeningRepository, IMapper mapper)
     {
-        public readonly IScreeningService _screeningRepository;
-        public readonly IMapper _mapper;
+        _screeningRepository = screeningRepository;
+        _mapper = mapper;
+    }
 
-        public ScreeningService(IScreeningService screeningRepository, IMapper mapper)
-        {
-            _screeningRepository = screeningRepository;
-            _mapper = mapper;
-        }
+    public async Task<IEnumerable<ScreeningResponseDTO>> GetAllScreeningsAsync()
+    {
+        var screenings = await _screeningRepository.GetAllAsync();
+        return _mapper.Map<IEnumerable<ScreeningResponseDTO>>(screenings);
+    }
 
-        public async Task<IEnumerable<ScreeningResponseDTO>> GetAllScreeningsAsync()
-        {
-            var screenings = await _screeningRepository.GetAllScreeningsAsync();
-            return _mapper.Map<IEnumerable<ScreeningResponseDTO>>(screenings);
-        }
-        public async Task<ScreeningResponseDTO> GetScreeningByIdAsync(int id)
-        {
-            var screening = await _screeningRepository.GetScreeningByIdAsync(id);
-            return _mapper.Map<ScreeningResponseDTO>(screening);
-        }
-        public async Task<ScreeningCreateDTO> CreateScreeningAsync(ScreeningCreateDTO screeningCreateDTO)
-        {
-            var screening = _mapper.Map<MovieScreening>(screeningCreateDTO);
-            var createdScreening = await _screeningRepository.CreateScreeningAsync(screeningCreateDTO);
-            return _mapper.Map<ScreeningCreateDTO>(createdScreening);
-        }
-        public async Task<bool> DeleteScreeningAsync(int id)
-        {
-            return await _screeningRepository.DeleteScreeningAsync(id);
-        }
-        public async Task<ScreeningUpdateDTO> UpdateScreeningAsync(int id, ScreeningUpdateDTO screeningUpdateDTO)
-        {
-            var screening = _mapper.Map<MovieScreening>(screeningUpdateDTO);
-            var updatedScreening = await _screeningRepository.UpdateScreeningAsync(id, screeningUpdateDTO);
-            return _mapper.Map<ScreeningUpdateDTO>(updatedScreening);
-        }
-        public async Task<ScreeningListDTO> GetScreeningListAsync()
-        {
-            var screenings = await _screeningRepository.GetScreeningListAsync();
-            return _mapper.Map<ScreeningListDTO>(screenings);
+    public async Task<ScreeningResponseDTO> GetScreeningByIdAsync(int id)
+    {
+        var screening = await _screeningRepository.GetByIdAsync(id);
+        if (screening == null) return null;
+        return _mapper.Map<ScreeningResponseDTO>(screening);
+    }
 
+    public async Task<ScreeningCreateDTO> CreateScreeningAsync(ScreeningCreateDTO dto)
+    {
+        var screening = _mapper.Map<MovieScreening>(dto);
+        var created = await _screeningRepository.AddAsync(screening); // ← entity ne DTO
+        return _mapper.Map<ScreeningCreateDTO>(created);
+    }
 
-        }
+    public async Task<ScreeningUpdateDTO> UpdateScreeningAsync(int id, ScreeningUpdateDTO dto)
+    {
+        var screening = await _screeningRepository.GetByIdAsync(id);
+        if (screening == null) return null;
+        _mapper.Map(dto, screening); // ← mapiraj na postojeći entity
+        await _screeningRepository.UpdateAsync(screening);
+        return _mapper.Map<ScreeningUpdateDTO>(screening);
+    }
+
+    public async Task<bool> DeleteScreeningAsync(int id)
+    {
+        var screening = await _screeningRepository.GetByIdAsync(id);
+        if (screening == null) return false;
+        await _screeningRepository.DeleteAsync(screening); // ← entity ne id
+        return true;
+    }
+
+    public async Task<IEnumerable<ScreeningListDTO>> GetScreeningListAsync(ScreeningFilterDTO filter)
+    {
+        var screenings = await _screeningRepository.GetFilteredAsync(filter);
+        return _mapper.Map<IEnumerable<ScreeningListDTO>>(screenings);
     }
 }

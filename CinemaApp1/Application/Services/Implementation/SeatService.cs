@@ -1,35 +1,40 @@
 ﻿using AutoMapper;
-using CinemaApp1.Application.Services.Interfaces;
+using CinemaApp.Domain.Interfaces;
 
-namespace CinemaApp1.Application.Services.Implementation
+public class SeatService : ISeatService
 {
-    public class SeatService : ISeatService
+    private readonly ISeatRepository _seatRepository;
+    private readonly IMapper _mapper;
+
+    public SeatService(ISeatRepository seatRepository, IMapper mapper)
     {
-        public readonly ISeatService _serviceOfWork;
-        public readonly IMapper _mapper;
+        _seatRepository = seatRepository;
+        _mapper = mapper;
+    }
 
-        public SeatService(ISeatService unitOfWork, IMapper mapper)
-        {
-            _serviceOfWork = unitOfWork;
-            _mapper = mapper;
-        }
-        public async Task<IEnumerable<SeatResponseDTO>> GetSeatAsync()
-        {
-            var seat = await _serviceOfWork.GetSeatAsync();
-            return _mapper.Map<IEnumerable<SeatResponseDTO>>(seat);
-        }
-        public async Task<SeatResponseDTO> GetSeatByIdAsync(int id)
-        {
-            var seat = await _serviceOfWork.GetSeatByIdAsync(id);
-            return _mapper.Map<SeatResponseDTO>(seat);
-        }
+    public async Task<IEnumerable<SeatResponseDTO>> GetAllAsync()
+    {
+        var seats = await _seatRepository.GetAllAsync();
+        return _mapper.Map<IEnumerable<SeatResponseDTO>>(seats);
+    }
 
-        public async Task<SeatCreateDTO> CreateSeatAsync(SeatCreateDTO seatCreateDTO)
-        {
-            var seat = _mapper.Map<Seat>(seatCreateDTO);
-            var createdSeat = await _serviceOfWork.CreateSeatAsync(seatCreateDTO);
-            return _mapper.Map<SeatCreateDTO>(createdSeat);
+    public async Task<IEnumerable<SeatResponseDTO>> GetAvailableByScreeningIdAsync(int screeningId)
+    {
+        var seats = await _seatRepository.GetAvailableSeatsByScreeningIdAsync(screeningId);
+        return _mapper.Map<IEnumerable<SeatResponseDTO>>(seats);
+    }
 
-        }
+    public async Task<SeatResponseDTO?> GetByIdAsync(int id)
+    {
+        var seat = await _seatRepository.GetByIdAsync(id);
+        if (seat == null) return null;
+        return _mapper.Map<SeatResponseDTO>(seat);
+    }
+
+    public async Task<SeatResponseDTO> CreateSeatAsync(SeatCreateDTO dto)
+    {
+        var seat = _mapper.Map<Seat>(dto); // ← mapiraj DTO na entity
+        var created = await _seatRepository.AddAsync(seat); // ← entity ne DTO
+        return _mapper.Map<SeatResponseDTO>(created);
     }
 }

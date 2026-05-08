@@ -9,5 +9,7 @@ namespace CinemaApp.Domain.Interfaces
     {
         Task<IEnumerable<MovieScreening>> GetUpcomingForNextDaysAsync(int days);
         Task<IEnumerable<MovieScreening>> GetByMovieIdAsync(int movieId);
+        Task<IEnumerable<MovieScreening>> GetFilteredAsync(ScreeningFilterDTO filter);
+
     }
 }

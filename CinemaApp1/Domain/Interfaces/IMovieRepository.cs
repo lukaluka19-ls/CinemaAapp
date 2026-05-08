@@ -1,14 +1,10 @@
-﻿using CinemaApp.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using CinemaApp.Domain.Interfaces;
 
-namespace CinemaApp.Domain.Interfaces
+public interface IMovieRepository : IGenericRepository<Movie>
 {
-    public interface IMovieRepository : IGenericRepository<Movie>
-    {
-        Task<IEnumerable<Movie>> GetByGenreIdAsync(int genreId);
-        Task<double> GetAverageRatingAsync(int movieId);
-
-    }
+    Task<IEnumerable<Movie>> GetAllWithGenresAsync();
+    Task<IEnumerable<Movie>> GetAllWithGenreAndRatingsAsync();
+    Task<IEnumerable<Movie>> GetAllWithRatingsAsync();
+    Task<IEnumerable<Movie>> GetByGenreIdAsync(int genreId);
+    Task<double> GetAverageRatingAsync(int movieId);
 }
