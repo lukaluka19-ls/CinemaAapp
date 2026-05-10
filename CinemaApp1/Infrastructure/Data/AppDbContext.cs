@@ -16,6 +16,6 @@ namespace CinemaApp.Data
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<MovieScreening> MovieScreenings { get; set; }
         public DbSet<ReservationSeat> ReservationSeats { get; set; }
-        public DbSet<Rating> Ratings { get; set; } // ← ovo
+        public DbSet<Rating> Ratings { get; set; }
     }
 }

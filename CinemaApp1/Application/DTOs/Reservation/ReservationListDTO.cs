@@ -9,5 +9,5 @@
     public bool DiscountApplied { get; set; }
     public bool IsPast { get; set; }
     public bool IsCanceled { get; set; }
-    public int? Rating { get; set; }  // null ako nije ocenjeno
+    public int? Rating { get; set; } 
 }

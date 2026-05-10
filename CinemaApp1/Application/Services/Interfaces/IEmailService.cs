@@ -1,7 +1,8 @@
-﻿namespace CinemaApp1.Application.Services.Interfaces
+﻿using CinemaApp1.Application.DTOs.Email;
+
+public interface IEmailService
 {
-    public class IEmailService
-    {
-        //Task<IEnumerable>
-    }
+    Task SendVerificationEmailAsync(VerificationEmailDTO dto);
+    Task SendResetPasswordEmailAsync(ResetPasswordEmailDTO dto);
+    Task SendReservationConfirmationEmailAsync(ReservationConfirmationEmailDTO dto);
 }

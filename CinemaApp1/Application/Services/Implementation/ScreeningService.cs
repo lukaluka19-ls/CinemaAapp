@@ -28,7 +28,7 @@ public class ScreeningService : IScreeningService
     public async Task<ScreeningCreateDTO> CreateScreeningAsync(ScreeningCreateDTO dto)
     {
         var screening = _mapper.Map<MovieScreening>(dto);
-        var created = await _screeningRepository.AddAsync(screening); // ← entity ne DTO
+        var created = await _screeningRepository.AddAsync(screening); 
         return _mapper.Map<ScreeningCreateDTO>(created);
     }
 
@@ -36,7 +36,7 @@ public class ScreeningService : IScreeningService
     {
         var screening = await _screeningRepository.GetByIdAsync(id);
         if (screening == null) return null;
-        _mapper.Map(dto, screening); // ← mapiraj na postojeći entity
+        _mapper.Map(dto, screening);
         await _screeningRepository.UpdateAsync(screening);
         return _mapper.Map<ScreeningUpdateDTO>(screening);
     }
@@ -45,7 +45,7 @@ public class ScreeningService : IScreeningService
     {
         var screening = await _screeningRepository.GetByIdAsync(id);
         if (screening == null) return false;
-        await _screeningRepository.DeleteAsync(screening); // ← entity ne id
+        await _screeningRepository.DeleteAsync(screening);
         return true;
     }
 

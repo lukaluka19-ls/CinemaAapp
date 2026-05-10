@@ -54,7 +54,7 @@ namespace CinemaApp.Data.Repositories
             return await _context.Genres.AnyAsync(predicate);
         }
 
-        // specificna metoda samo za Genre
+        
         public async Task<Genre?> GetByNameAsync(string name)
         {
             return await _context.Genres

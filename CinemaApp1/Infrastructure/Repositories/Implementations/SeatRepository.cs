@@ -32,7 +32,7 @@ namespace CinemaApp.Infrastructure.Repositories.Implementations
             foreach (var seat in seatsToUpdate)
             {
                 seat.IsOccupied = true;
-                // ovde možete dodati logiku za povezivanje sa rezervacijom ako je potrebno
+                
             }
             await _context.SaveChangesAsync();
         }

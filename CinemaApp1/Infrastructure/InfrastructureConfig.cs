@@ -20,7 +20,7 @@ namespace CinemaApp1.Infrastructure
             services.AddDbContext<AppDbContext>(options =>
                 options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
-
+            // Repositories
             services.AddScoped<IGenreRepository, GenreRepository>();
             services.AddScoped<IMovieRepository, MovieRepository>();
             services.AddScoped<IScreeningRepository, ScreeningRepository>();
@@ -28,9 +28,10 @@ namespace CinemaApp1.Infrastructure
             services.AddScoped<IReservationRepository, ReservationRepository>();
             services.AddScoped<IRatingRepository, RatingRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IPasswordHashService, PasswordHashService>();
 
             // Services
+            services.AddScoped<IPasswordHashService, PasswordHashService>();
+            services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IGenreService, GenreService>();
@@ -39,27 +40,6 @@ namespace CinemaApp1.Infrastructure
             services.AddScoped<IScreeningService, ScreeningService>();
             services.AddScoped<ISeatService, SeatService>();
             services.AddScoped<IReservationService, ReservationService>();
-
-            // JWT Authentication
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = configuration["JwtConfig:Issuer"],
-                    ValidAudience = configuration["JwtConfig:Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(configuration["JwtConfig:Key"]!))
-                };
-            });
         }
     }
 }
