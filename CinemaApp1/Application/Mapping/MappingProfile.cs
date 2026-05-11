@@ -8,12 +8,13 @@ public class MappingProfile : Profile
     {
         CreateMap<User, UserResponseDto>();
         CreateMap<RegisterDTO, User>()
-            .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
-            .ForMember(dest => dest.Role, opt => opt.Ignore())
-            .ForMember(dest => dest.IsVerified, opt => opt.Ignore())
-            .ForMember(dest => dest.IsBlocked, opt => opt.Ignore())
-            .ForMember(dest => dest.VerificationToken, opt => opt.Ignore())
-            .ForMember(dest => dest.ResetPasswordToken, opt => opt.Ignore());
+        .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
+        .ForMember(dest => dest.Role, opt => opt.Ignore())
+        .ForMember(dest => dest.IsVerified, opt => opt.Ignore())
+        .ForMember(dest => dest.IsBlocked, opt => opt.Ignore())
+        .ForMember(dest => dest.VerificationToken, opt => opt.Ignore())
+        .ForMember(dest => dest.ResetPasswordToken, opt => opt.Ignore())
+        .ForMember(dest => dest.ResetPasswordTokenExpiry, opt => opt.Ignore());
 
         CreateMap<Genre, GenreResponseDTO>();
         CreateMap<GenreCreateDTO, Genre>();

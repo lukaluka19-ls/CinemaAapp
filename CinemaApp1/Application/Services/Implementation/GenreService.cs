@@ -22,7 +22,7 @@ namespace CinemaApp1.Application.Services.Implementation
             return _mapper.Map<IEnumerable<GenreResponseDTO>>(genres);
         }
 
-        public async Task<GenreResponseDTO> GetByIDAsync(int id)
+        public async Task<GenreResponseDTO> GetByIdAsync(int id)
         {
             var genre = await repository.GetByIdAsync(id);
             return _mapper.Map<GenreResponseDTO>(genre);
@@ -30,8 +30,8 @@ namespace CinemaApp1.Application.Services.Implementation
         public async Task<GenreCreateDTO> CreateAsync(GenreCreateDTO dto)
         {
             var genre = _mapper.Map<Genre>(dto);
-            var createdGenre = await repository.AddAsync(genre);
-            return _mapper.Map<GenreCreateDTO>(createdGenre);
+            await repository.AddAsync(genre);
+            return _mapper.Map<GenreResponseDTO>(genre);
         }
         public async Task<bool> UpdateAsync(int id, GenreUpdateDTO dto)
         {

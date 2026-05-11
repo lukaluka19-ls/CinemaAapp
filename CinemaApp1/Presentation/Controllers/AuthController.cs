@@ -77,19 +77,19 @@ namespace CinemaApp1.Presentation.Controllers
             return Ok("Password successfully changed.");
         }
 
-        [Authorize]
-        [HttpPost("change-password")]
-        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDTO dto)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+        //[Authorize]
+        //[HttpPost("change-password")]
+        //public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDTO dto)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return BadRequest(ModelState);
 
-            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-            var result = await _authService.ChangePasswordAsync(userId, dto);
-            if (!result)
-                return BadRequest("Current password is incorrect.");
+        //    var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        //    var result = await _authService.ChangePasswordAsync(userId, dto);
+        //    if (!result)
+        //        return BadRequest("Current password is incorrect.");
 
-            return Ok("Password successfully changed.");
-        }
+        //    return Ok("Password successfully changed.");
+        //}
     }
 }

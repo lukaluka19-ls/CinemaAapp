@@ -9,6 +9,7 @@ namespace CinemaApp.Data
             : base(options)
         {
         }
+
         public DbSet<User> Users { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Genre> Genres { get; set; }
@@ -17,5 +18,25 @@ namespace CinemaApp.Data
         public DbSet<MovieScreening> MovieScreenings { get; set; }
         public DbSet<ReservationSeat> ReservationSeats { get; set; }
         public DbSet<Rating> Ratings { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<User>().HasData(new User
+            {
+                Id = 1,
+                Name = "Admin",
+                Email = "admin@cinemaapp.com",
+                DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                PasswordHash = "100000.tRxqU6dDAmCFYuEku/TZag==.Bb6Z/x+8cOATAmOT6T45bapxqb/ciIXDb0+J71McIjM=",
+                Role = (int)UserRole.Admin,
+                IsVerified = true,
+                IsBlocked = false,
+                VerificationToken = null,
+                ResetPasswordToken = null,
+                ResetPasswordTokenExpiry = null
+            });
+        }
     }
 }

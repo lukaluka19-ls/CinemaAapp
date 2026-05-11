@@ -3,6 +3,7 @@ using System;
 using CinemaApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CinemaApp1.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260511083727_newInit")]
+    partial class newInit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -266,19 +269,6 @@ namespace CinemaApp1.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Email = "admin@cinemaapp.com",
-                            IsBlocked = false,
-                            IsVerified = true,
-                            Name = "Admin",
-                            PasswordHash = "100000.tRxqU6dDAmCFYuEku/TZag==.Bb6Z/x+8cOATAmOT6T45bapxqb/ciIXDb0+J71McIjM=",
-                            Role = 0
-                        });
                 });
 
             modelBuilder.Entity("Movie", b =>

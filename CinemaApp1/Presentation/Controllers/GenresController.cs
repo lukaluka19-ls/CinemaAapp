@@ -1,22 +1,69 @@
 ﻿using CinemaApp1.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CinemaApp.Presentation.Controllers
+namespace CinemaApp1.Presentation.Controllers
 {
-    public class GenresController : Controller
+    [ApiController]
+    [Route("api/[controller]")]
+    [Authorize(Roles = "Admin")]
+    public class GenresController : ControllerBase
     {
-        private readonly IGenreService _service;
-        public GenresController(IGenreService service)
+        private readonly IGenreService _genreService;
+
+        public GenresController(IGenreService genreService)
         {
-            _service = service;
+            _genreService = genreService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var genres = await _service.GetAllAsync();
-            return View(genres);
+            var genres = await _genreService.GetAllAsync();
+            return Ok(genres);
         }
 
-    } 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var genre = await _genreService.GetByIdAsync(id);
+            if (genre == null)
+                return NotFound();
+
+            return Ok(genre);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] GenreCreateDTO dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var created = await _genreService.CreateAsync(dto);
+            return CreatedAtAction(nameof(GetById), new { Id = created.id }, created);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] GenreUpdateDTO dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _genreService.UpdateAsync(id, dto);
+            if (!result)
+                return NotFound();
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _genreService.DeleteAsync(id);
+            if (!result)
+                return NotFound();
+
+            return NoContent();
+        }
+    }
 }

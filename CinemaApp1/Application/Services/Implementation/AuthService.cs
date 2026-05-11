@@ -33,21 +33,22 @@ namespace CinemaApp1.Application.Services.Implementation
             if (exists) return false;
 
             var user = _mapper.Map<User>(dto);
+            user.DateOfBirth = DateTime.SpecifyKind(dto.DateOfBirth, DateTimeKind.Utc); // DODATO ZBOG POSTGRESA JER NECE DA PRIMI UNRECOGNIZED DATETIME
             user.PasswordHash = _passwordHashService.Hash(dto.Password);
-            user.Role = (int)UserRole.Consumer;
-            user.IsVerified = false;
+            user.Role = UserRole.Consumer;
+            user.IsVerified = true;//true privremeno da ne ceka verifikaciju
             user.IsBlocked = false;
             user.VerificationToken = Guid.NewGuid().ToString("N");
 
             await _userRepository.AddAsync(user);
 
             var verificationLink = $"{_configuration["AppUrl"]}/api/auth/verify-email?token={user.VerificationToken}";
-            await _emailService.SendVerificationEmailAsync(new VerificationEmailDTO
-            {
-                To = user.Email,
-                UserName = user.Name,
-                VerificationLink = verificationLink
-            });
+            //await _emailService.SendVerificationEmailAsync(new VerificationEmailDTO
+            //{
+            //    To = user.Email,
+            //    UserName = user.Name,
+            //    VerificationLink = verificationLink
+            //});
 
             return true;
         }
@@ -76,19 +77,18 @@ namespace CinemaApp1.Application.Services.Implementation
             await _userRepository.UpdateAsync(user);
 
             var resetLink = $"{_configuration["AppUrl"]}/api/auth/reset-password?token={user.ResetPasswordToken}";
-            await _emailService.SendResetPasswordEmailAsync(new ResetPasswordEmailDTO
-            {
-                To = user.Email,
-                UserName = user.Name,
-                ResetLink = resetLink
-            });
+            //await _emailService.SendResetPasswordEmailAsync(new ResetPasswordEmailDTO
+            //{
+            //    To = user.Email,
+            //    UserName = user.Name,
+            //    ResetLink = resetLink
+            //});
         }
 
         public async Task<bool> ResetPasswordAsync(ResetPasswordDTO dto)
         {
             var users = await _userRepository.FindAsync(u =>
-                u.ResetPasswordToken == dto.Token &&
-                u.ResetPasswordTokenExpiry > DateTime.UtcNow);
+                u.ResetPasswordToken == dto.Token);
 
             var user = users.FirstOrDefault();
             if (user == null) return false;
