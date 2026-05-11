@@ -34,7 +34,7 @@ public class SeatService : ISeatService
     public async Task<SeatResponseDTO> CreateSeatAsync(SeatCreateDTO dto)
     {
         var seat = _mapper.Map<Seat>(dto);
-        var created = await _seatRepository.AddAsync(seat);
-        return _mapper.Map<SeatResponseDTO>(created);
+        await _seatRepository.AddAsync(seat);
+        return _mapper.Map<SeatResponseDTO>(seat);
     }
 }

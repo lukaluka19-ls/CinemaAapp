@@ -4,7 +4,7 @@
     {
         Task<IEnumerable<MovieResponseDTO>> GetAllAsync();
         Task<MovieResponseDTO> GetByIDAsync(int id);
-        Task<MovieCreateDTO> CreateAsync(MovieCreateDTO dto);
+        Task<MovieResponseDTO> CreateAsync(MovieCreateDTO dto);
         Task<MovieUpdateDTO> UpdateAsync(int id, MovieUpdateDTO dto);
         
     }

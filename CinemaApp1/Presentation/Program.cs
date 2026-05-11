@@ -14,6 +14,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddOpenApi();
+//builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.ConfigureInfrastructure(builder.Configuration);
 
@@ -56,7 +57,7 @@ app.MapOpenApi();
 app.MapScalarApiReference(options =>
 {
     options.Title = "CinemaApp1 API Reference";
-    options.Theme = ScalarTheme.BluePlanet;
+    options.Theme = ScalarTheme.DeepSpace;
     //options.Description = "API reference for CinemaApp1";
     //options.Version = "v1.0";
     options.CustomCss = "";

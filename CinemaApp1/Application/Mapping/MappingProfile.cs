@@ -52,7 +52,9 @@ public class MappingProfile : Profile
         CreateMap<ScreeningUpdateDTO, MovieScreening>()
             .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
 
-        CreateMap<Seat, SeatResponseDTO>().ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.IsOccupied ? "Occupied" : "Available"));
+        CreateMap<Seat, SeatCreateDTO>();
+        CreateMap<Seat, SeatResponseDTO>()
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.IsOccupied ? "Occupied" : "Available"));
 
         CreateMap<Reservation, ReservationResponseDTO>()
             .ForMember(dest => dest.MovieName, opt => opt.MapFrom(src => src.Screening.Movie.Name))

@@ -26,11 +26,11 @@ namespace CinemaApp1.Application.Services.Implementation
             var movie = await repository.GetByIdAsync(id);
             return _mapper.Map<MovieResponseDTO>(movie);
         }
-        public async Task<MovieCreateDTO> CreateAsync(MovieCreateDTO dto)
+        public async Task<MovieResponseDTO> CreateAsync(MovieCreateDTO dto)
         {
             var movie = _mapper.Map<Movie>(dto);
             var createdMovie = await repository.AddAsync(movie);
-            return _mapper.Map<MovieCreateDTO>(createdMovie);
+            return _mapper.Map<MovieResponseDTO>(createdMovie);
         }
         public async Task<MovieUpdateDTO> UpdateAsync(int id, MovieUpdateDTO dto)
         {

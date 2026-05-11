@@ -6,7 +6,7 @@ namespace CinemaApp1.Presentation.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class GenresController : ControllerBase
     {
         private readonly IGenreService _genreService;
@@ -29,7 +29,6 @@ namespace CinemaApp1.Presentation.Controllers
             var genre = await _genreService.GetByIdAsync(id);
             if (genre == null)
                 return NotFound();
-
             return Ok(genre);
         }
 
@@ -38,9 +37,8 @@ namespace CinemaApp1.Presentation.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-
             var created = await _genreService.CreateAsync(dto);
-            return CreatedAtAction(nameof(GetById), new { Id = created.id }, created);
+            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
 
         [HttpPut("{id}")]
@@ -48,11 +46,9 @@ namespace CinemaApp1.Presentation.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-
             var result = await _genreService.UpdateAsync(id, dto);
             if (!result)
                 return NotFound();
-
             return NoContent();
         }
 
@@ -62,7 +58,6 @@ namespace CinemaApp1.Presentation.Controllers
             var result = await _genreService.DeleteAsync(id);
             if (!result)
                 return NotFound();
-
             return NoContent();
         }
     }

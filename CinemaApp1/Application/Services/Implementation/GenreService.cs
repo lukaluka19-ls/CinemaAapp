@@ -27,7 +27,7 @@ namespace CinemaApp1.Application.Services.Implementation
             var genre = await repository.GetByIdAsync(id);
             return _mapper.Map<GenreResponseDTO>(genre);
         }
-        public async Task<GenreCreateDTO> CreateAsync(GenreCreateDTO dto)
+        public async Task<GenreResponseDTO> CreateAsync(GenreCreateDTO dto)
         {
             var genre = _mapper.Map<Genre>(dto);
             await repository.AddAsync(genre);
