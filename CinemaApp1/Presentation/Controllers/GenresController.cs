@@ -6,7 +6,6 @@ namespace CinemaApp1.Presentation.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    //[Authorize(Roles = "Admin")]
     public class GenresController : ControllerBase
     {
         private readonly IGenreService _genreService;
@@ -33,6 +32,7 @@ namespace CinemaApp1.Presentation.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([FromBody] GenreCreateDTO dto)
         {
             if (!ModelState.IsValid)
@@ -42,6 +42,7 @@ namespace CinemaApp1.Presentation.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Update(int id, [FromBody] GenreUpdateDTO dto)
         {
             if (!ModelState.IsValid)
@@ -53,6 +54,7 @@ namespace CinemaApp1.Presentation.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _genreService.DeleteAsync(id);

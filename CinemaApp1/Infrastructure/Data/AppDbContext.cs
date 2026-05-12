@@ -19,6 +19,8 @@ namespace CinemaApp.Data
         public DbSet<ReservationSeat> ReservationSeats { get; set; }
         public DbSet<Rating> Ratings { get; set; }
 
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -37,6 +39,38 @@ namespace CinemaApp.Data
                 ResetPasswordToken = null,
                 ResetPasswordTokenExpiry = null
             });
+            //AUTOINCREMENT VALUES FOR EVERY
+            modelBuilder.Entity<User>()
+            .Property(u => u.Id)
+            .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Genre>()
+                .Property(g => g.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Movie>()
+                .Property(m => m.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<MovieScreening>()
+                .Property(s => s.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Seat>()
+                .Property(s => s.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Reservation>()
+                .Property(r => r.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<ReservationSeat>()
+                .Property(rs => rs.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Rating>()
+                .Property(r => r.Id)
+                .ValueGeneratedOnAdd();
         }
     }
 }

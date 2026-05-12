@@ -23,9 +23,9 @@ namespace CinemaApp1.Presentation.Controllers
             return Ok(seats);
         }
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById()
+        public async Task<IActionResult> GetById(int id)
         {
-            var seats = await _seatService.GetAllAsync();
+            var seats = await _seatService.GetByIdAsync(id);
             if (seats == null)
                 return NotFound();
             return Ok(seats);
@@ -37,7 +37,7 @@ namespace CinemaApp1.Presentation.Controllers
                 return BadRequest(ModelState);
 
             var created = await _seatService.CreateSeatAsync(dTO);
-            return CreatedAtAction(nameof(GetById), new { id = created.Id });
+            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
     }
 }

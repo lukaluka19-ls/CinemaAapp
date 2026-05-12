@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using CinemaApp.Domain.Interfaces;
 
 public class ScreeningService : IScreeningService
@@ -25,11 +27,11 @@ public class ScreeningService : IScreeningService
         return _mapper.Map<ScreeningResponseDTO>(screening);
     }
 
-    public async Task<ScreeningCreateDTO> CreateScreeningAsync(ScreeningCreateDTO dto)
+    public async Task<ScreeningResponseDTO> CreateScreeningAsync(ScreeningCreateDTO dto)
     {
         var screening = _mapper.Map<MovieScreening>(dto);
-        var created = await _screeningRepository.AddAsync(screening); 
-        return _mapper.Map<ScreeningCreateDTO>(created);
+        var created = await _screeningRepository.AddAsync(screening);
+        return _mapper.Map<ScreeningResponseDTO>(created);
     }
 
     public async Task<ScreeningUpdateDTO> UpdateScreeningAsync(int id, ScreeningUpdateDTO dto)

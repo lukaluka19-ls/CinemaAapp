@@ -17,6 +17,7 @@ namespace CinemaApp1.Presentation.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Consumer")]
         public async Task<IActionResult> GetAll()
         {
             var reservation = await _reservationService.GetAllAsync();
@@ -27,19 +28,67 @@ namespace CinemaApp1.Presentation.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var reservation = await _reservationService.GetByIDAsync(id);
-            if(reservation == null) 
+            if (reservation == null)
                 return NotFound();
             return Ok(reservation);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody]CreateReservationDTO dTO)
+        [Authorize(Roles = "Consumer")]
+        public async Task<IActionResult> Create(CreateReservationDTO dto)
         {
-            if(!ModelState.IsValid)
-                return BadRequest(ModelState);
-            var created = await _reservationService.CreateAsync(dTO);
-            //return CreatedAtAction(nameof(GetById), new {})
+            var created = await _reservationService.CreateAsync(dto);
+            return Ok(created);
         }
 
+        [HttpGet("{id}")]
+        [Authorize(Roles = "Consumer")]
+        public async Task<IActionResult> GetDeatailById(int id)
+        {
+            var reservation = await _reservationService.GetDetailAsync(id);
+            return Ok(reservation);
+        }
+        [HttpGet("{id}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetListAsyncId(int userId)
+        {
+            var reservation = await _reservationService.GetListAsync(userId);
+            return Ok(reservation);
+        }
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "Consumer")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var reservation = await _reservationService.DeleteReservationAsync(id);
+            if(!reservation)
+                return NotFound();
+            return NoContent();
+
+        }
+
+
+        //[HttpPut("{id}")]
+        ////[Authorize(Roles = "Admin")]
+        //public async Task<IActionResult> Update(int id, [FromBody] UpdateReser dto)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return BadRequest(ModelState);
+
+        //    var result = await _reservationService.(id, dto);
+        //    if (result == null)
+        //        return NotFound();
+
+        //    return Ok(result);
+        //}
+
+        //[HttpDelete("{id}")]
+        ////[Authorize(Roles = "Admin")]
+        //public async Task<IActionResult> Delete(int id)
+        //{
+        //    var result = await _re.DeleteScreeningAsync(id);
+        //    if (!result)
+        //        return NotFound();
+
+        //    return NoContent();
     }
 }

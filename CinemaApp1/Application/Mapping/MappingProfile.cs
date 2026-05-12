@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 namespace CinemaApp1.Application.Mapping;
 
-
 public class MappingProfile : Profile
 {
     public MappingProfile()
@@ -52,7 +51,12 @@ public class MappingProfile : Profile
         CreateMap<ScreeningUpdateDTO, MovieScreening>()
             .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
 
-        CreateMap<Seat, SeatCreateDTO>();
+        /*
+         * CreateMap<SeatCreateDTO, Seat>();
+            CreateMap<Seat, SeatResponseDTO>();
+        */
+
+        CreateMap<SeatCreateDTO, Seat>();
         CreateMap<Seat, SeatResponseDTO>()
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.IsOccupied ? "Occupied" : "Available"));
 
@@ -66,6 +70,14 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.ScreeningDateTime, opt => opt.MapFrom(src => src.Screening.DateTime))
             .ForMember(dest => dest.IsPast, opt => opt.MapFrom(src => src.Screening.DateTime < DateTime.UtcNow));
 
+
+        CreateMap<CreateReservationDTO, Reservation>()
+            .ForMember(dest => dest.UniqueCode, opt => opt.Ignore())
+            .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
+            .ForMember(dest => dest.IsCanceled, opt => opt.Ignore())
+            .ForMember(dest => dest.TotalPrice, opt => opt.Ignore())
+            .ForMember(dest => dest.DiscountApplied, opt => opt.Ignore());
+
         CreateMap<Reservation, ReservationDetailDTO>()
             .ForMember(dest => dest.MovieName, opt => opt.MapFrom(src => src.Screening.Movie.Name))
             .ForMember(dest => dest.PosterImageUrl, opt => opt.MapFrom(src => src.Screening.Movie.PosterImage))
@@ -73,6 +85,8 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.TicketPrice, opt => opt.MapFrom(src => src.Screening.TicketPrice))
             .ForMember(dest => dest.Seats, opt => opt.MapFrom(src => src.ReservationSeats.Select(rs => rs.Seat).ToList()))
             .ForMember(dest => dest.Rating, opt => opt.MapFrom(src => src.Rating != null ? src.Rating.Stars : (int?)null));
+
+
 
         CreateMap<User, UserResponseDTO>();
         CreateMap<User, UserListDTO>();

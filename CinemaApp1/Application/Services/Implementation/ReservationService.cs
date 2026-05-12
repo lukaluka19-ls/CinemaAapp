@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CinemaApp.Domain.Interfaces;
+using CinemaApp.Infrastructure.Repositories.Implementations;
 using CinemaApp1.Application.Services.Interfaces;
 
 namespace CinemaApp1.Application.Services.Implementation
@@ -25,11 +26,15 @@ namespace CinemaApp1.Application.Services.Implementation
             var reservation = await repository.GetByIdAsync(id);
             return _mapper.Map<ReservationResponseDTO>(reservation);
         }
-        public async Task<CreateReservationDTO> CreateAsync(CreateReservationDTO dto)
+        public async Task<ReservationResponseDTO> CreateAsync(CreateReservationDTO dto)
         {
             var reservation = _mapper.Map<Reservation>(dto);
+            reservation.UniqueCode = Guid.NewGuid().ToString("N").Substring(0, 8).ToUpper();
+            reservation.CreatedAt = DateTime.UtcNow;
+            reservation.IsCanceled = false;
+
             var createdReservation = await repository.AddAsync(reservation);
-            return _mapper.Map<CreateReservationDTO>(createdReservation);
+            return _mapper.Map<ReservationResponseDTO>(createdReservation);
         }
 
         public async Task<ReservationDetailDTO> GetDetailAsync(int id)
@@ -43,6 +48,14 @@ namespace CinemaApp1.Application.Services.Implementation
         {
             var reservations = await repository.GetByIdAsync(userId);
             return _mapper.Map<IEnumerable<ReservationListDTO>>(reservations);
+        }
+
+        public async Task<bool> DeleteReservationAsync(int id)
+        {
+            var reservation = await repository.GetByIdAsync(id);
+            if (reservation == null) return false;
+            await repository.DeleteAsync(reservation);
+            return true;
         }
     }
 }

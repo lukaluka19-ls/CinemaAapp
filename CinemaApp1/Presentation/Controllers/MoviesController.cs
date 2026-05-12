@@ -48,10 +48,10 @@ namespace CinemaApp1.Presentation.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             var result = await _movieService.UpdateAsync(id, dto);
-            return NoContent();
             //if (!result)
-            //    return NotFound();
-            //return NoContent();
+                //return NoContent();
+            return NotFound();
+
         }
 
     }
