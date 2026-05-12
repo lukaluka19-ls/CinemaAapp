@@ -28,12 +28,14 @@ namespace CinemaApp1.Application.Services.Implementation
         }
         public async Task<MovieResponseDTO> CreateAsync(MovieCreateDTO dto)
         {
+            var exists = await repository.AnyAsync(x => x.OriginalName == dto.OriginalName);
+            if (exists)
+                throw new Exception("Movie allready Exists");
+
             var movie = _mapper.Map<Movie>(dto);
             var createdMovie = await repository.AddAsync(movie);
-            if (createdMovie != null)
                 return _mapper.Map<MovieResponseDTO>(createdMovie);
-            else
-                throw new Exception("Already Exists");
+            
         }
         public async Task<MovieUpdateDTO> UpdateAsync(int id, MovieUpdateDTO dto)
         {
