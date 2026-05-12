@@ -1,5 +1,6 @@
 using CinemaApp1.Application.Mapping;
 using CinemaApp1.Application.Services.Implementation;
+using CinemaApp1.Application.Services.Interfaces;
 using CinemaApp1.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -45,6 +46,8 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<MappingProfile>());
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IUserContext, UserContext>();
 
 //builder.Services.AddHttpsRedirection(options => {
 //    options.HttpsPort = 443;

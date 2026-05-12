@@ -7,6 +7,6 @@ public class CreateReservationDTO
     [Required]
     [MinLength(1)]
     public List<int> SeatIds { get; set; } = new();
-    [EmailAddress]
-    public string? GuestEmail { get; set; }  
+    //[EmailAddress]
+    //public string? GuestEmail { get; set; }  
 }

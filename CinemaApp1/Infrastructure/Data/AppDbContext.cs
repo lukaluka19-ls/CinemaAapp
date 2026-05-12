@@ -16,7 +16,6 @@ namespace CinemaApp.Data
         public DbSet<Seat> Seats { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<MovieScreening> MovieScreenings { get; set; }
-        public DbSet<ReservationSeat> ReservationSeats { get; set; }
         public DbSet<Rating> Ratings { get; set; }
 
 
@@ -64,13 +63,17 @@ namespace CinemaApp.Data
                 .Property(r => r.Id)
                 .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<ReservationSeat>()
-                .Property(rs => rs.Id)
-                .ValueGeneratedOnAdd();
+            //modelBuilder.Entity<ReservationSeat>()
+            //    .Property(rs => rs.Id)
+            //    .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Rating>()
                 .Property(r => r.Id)
                 .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Seat>()
+                .HasMany(s => s.Reservations)
+                .WithMany(x => x.Seats);
         }
     }
 }

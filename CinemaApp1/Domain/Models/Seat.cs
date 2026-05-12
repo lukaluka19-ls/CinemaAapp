@@ -9,5 +9,8 @@ public class Seat
 
     // navigaciona svojstva
     public MovieScreening Screening { get; set; } = null!;
-    public ICollection<ReservationSeat> ReservationSeats { get; set; } = new List<ReservationSeat>();
+    public ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
+
+    public bool IsOccupiedCheck()
+        => Reservations.Any(r => !r.IsCanceled);
 }

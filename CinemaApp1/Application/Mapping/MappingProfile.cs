@@ -62,8 +62,8 @@ public class MappingProfile : Profile
 
         CreateMap<Reservation, ReservationResponseDTO>()
             .ForMember(dest => dest.MovieName, opt => opt.MapFrom(src => src.Screening.Movie.Name))
-            .ForMember(dest => dest.ScreeningDateTime, opt => opt.MapFrom(src => src.Screening.DateTime))
-            .ForMember(dest => dest.SeatNumbers, opt => opt.MapFrom(src => src.ReservationSeats.Select(rs => rs.Seat.SeatNumber).ToList()));
+            .ForMember(dest => dest.ScreeningDateTime, opt => opt.MapFrom(src => src.Screening.DateTime));
+            //.ForMember(dest => dest.SeatNumbers, opt => opt.MapFrom(src => src.ReservationSeats.Select(rs => rs.Seat.SeatNumber).ToList()));
 
         CreateMap<Reservation, ReservationListDTO>()
             .ForMember(dest => dest.MovieName, opt => opt.MapFrom(src => src.Screening.Movie.Name))
@@ -83,7 +83,7 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.PosterImageUrl, opt => opt.MapFrom(src => src.Screening.Movie.PosterImage))
             .ForMember(dest => dest.ScreeningDateTime, opt => opt.MapFrom(src => src.Screening.DateTime))
             .ForMember(dest => dest.TicketPrice, opt => opt.MapFrom(src => src.Screening.TicketPrice))
-            .ForMember(dest => dest.Seats, opt => opt.MapFrom(src => src.ReservationSeats.Select(rs => rs.Seat).ToList()))
+            //.ForMember(dest => dest.Seats, opt => opt.MapFrom(src => src.ReservationSeats.Select(rs => rs.Seat).ToList()))
             .ForMember(dest => dest.Rating, opt => opt.MapFrom(src => src.Rating != null ? src.Rating.Stars : (int?)null));
 
 

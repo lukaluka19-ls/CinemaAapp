@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CinemaApp.Domain.Interfaces;
+using Raven.Client.Exceptions;
 
 public class SeatService : ISeatService
 {
@@ -33,6 +34,10 @@ public class SeatService : ISeatService
 
     public async Task<SeatResponseDTO> CreateSeatAsync(SeatCreateDTO dto)
     {
+        var exists = await _seatRepository.ExistsAsync(dto.SeatNumber);
+        if (exists) 
+            throw new Exception("This seat already exists.");
+
         var seat = _mapper.Map<Seat>(dto);
         await _seatRepository.AddAsync(seat);
         return _mapper.Map<SeatResponseDTO>(seat);

@@ -1,20 +1,21 @@
 ﻿using AutoMapper;
 using CinemaApp.Domain.Interfaces;
-using CinemaApp.Infrastructure.Repositories.Implementations;
 using CinemaApp1.Application.Services.Interfaces;
 
 namespace CinemaApp1.Application.Services.Implementation
 {
-    public class ReservationService : IReservationService
+    public class ReservationService(
+        IReservationRepository repository, 
+        IMapper mapper,
+        ISeatRepository seatsRepository,
+        IScreeningRepository screeningRepository,
+        IUserContext userContext) : IReservationService
     {
-        public readonly IReservationRepository repository;
-        public readonly IMapper _mapper;
-
-        public ReservationService(IReservationRepository repository, IMapper mapper)
-        {
-            this.repository = repository;
-            _mapper = mapper;
-        }
+        private readonly IReservationRepository repository = repository;
+        private readonly ISeatRepository seatsRepository = seatsRepository;
+        private readonly IScreeningRepository screeningRepository = screeningRepository;
+        private readonly IMapper _mapper = mapper;
+        private readonly IUserContext _userContext = userContext;
 
         public async Task<IEnumerable<ReservationResponseDTO>> GetAllAsync()
         {
@@ -28,10 +29,41 @@ namespace CinemaApp1.Application.Services.Implementation
         }
         public async Task<ReservationResponseDTO> CreateAsync(CreateReservationDTO dto)
         {
+            //get seats by ids
+            //existing check
+
+            var screening = await screeningRepository.GetByIdAsync(dto.ScreeningId);
+            if (screening == null)
+            {
+                throw new Exception("Screening id not foudnd");
+            }
+
+            var seats = await seatsRepository.GetRangeAsync(dto.SeatIds);
+
+            var nonExistingSeats = dto.SeatIds.Except(seats.Select(x => x.Id)).ToList();
+            if(nonExistingSeats.Count != 0)
+            {
+                throw new Exception($"Seats with ids {string.Join(", ", nonExistingSeats)} is ocupied");
+            }
+
+            foreach (var seat in seats)
+            {
+                if (seat.IsOccupiedCheck())
+                {
+                    throw new Exception($"Seat {seat.Id} is ocupied");
+                }
+                if (seat.ScreeningId != dto.ScreeningId)
+                {
+                    throw new Exception($"Seat {seat.Id} does not belong to this screening session");
+                }
+            }
+
             var reservation = _mapper.Map<Reservation>(dto);
             reservation.UniqueCode = Guid.NewGuid().ToString("N").Substring(0, 8).ToUpper();
             reservation.CreatedAt = DateTime.UtcNow;
             reservation.IsCanceled = false;
+            reservation.Seats = [.. seats];
+            reservation.UserId = _userContext.UserId;
 
             var createdReservation = await repository.AddAsync(reservation);
             return _mapper.Map<ReservationResponseDTO>(createdReservation);

@@ -17,7 +17,7 @@ namespace CinemaApp1.Presentation.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Consumer")]
+        //[Authorize(Roles = "Consumer")]
         public async Task<IActionResult> GetAll()
         {
             var reservation = await _reservationService.GetAllAsync();
@@ -34,7 +34,7 @@ namespace CinemaApp1.Presentation.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Consumer")]
+        //[Authorize(Roles = "Consumer")]
         public async Task<IActionResult> Create(CreateReservationDTO dto)
         {
             var created = await _reservationService.CreateAsync(dto);
@@ -42,21 +42,21 @@ namespace CinemaApp1.Presentation.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "Consumer")]
+        //[Authorize(Roles = "Consumer")]
         public async Task<IActionResult> GetDeatailById(int id)
         {
             var reservation = await _reservationService.GetDetailAsync(id);
             return Ok(reservation);
         }
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetListAsyncId(int userId)
         {
             var reservation = await _reservationService.GetListAsync(userId);
             return Ok(reservation);
         }
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Consumer")]
+        //[Authorize(Roles = "Consumer")]
         public async Task<IActionResult> Delete(int id)
         {
             var reservation = await _reservationService.DeleteReservationAsync(id);

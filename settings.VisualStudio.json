@@ -1,0 +1,13 @@
+/* Visual Studio Settings File */
+{
+  "intellicode.advanced.suggestions.enableDiffViewDefaultForIntents": true,
+  "textEditor.codeCompletions.general.codeCompletionsProviders": [
+    "copilot-completions",
+    "copilot-nes",
+    "intellicode"
+  ],
+  "textEditor.codeCompletions.preferences.showCodeCompletionsWhileInDebugMode": true,
+  "textEditor.codeCompletions.preferences.showCodeCompletionsOnlyAfterPause": true,
+  "textEditor.codeCompletions.preferences.hideHintBarFromCodeCompletions": true,
+  "textEditor.codeCompletions.preferences.useColorizedText": false
+}

@@ -36,5 +36,23 @@ namespace CinemaApp.Infrastructure.Repositories.Implementations
             }
             await _context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<Seat>> GetRangeAsync(IEnumerable<int> seatsId)
+        {
+            return await _context.Seats
+                .Include(x => x.Reservations)
+                .Where(s => seatsId.Contains(s.Id))
+                .ToListAsync();
+        }
+
+        //public Task<bool> ExistsAsync(int seatNumber)
+        //{
+        //    return _context.Seats.AnyAsync(s => s.SeatNumber == seatNumber);
+        //}
+
+        public Task<bool> ExistsAsync(int seatNumber)
+        {
+            return _context.Seats.AnyAsync(s => s.SeatNumber == seatNumber);        
+        }
     }
 }

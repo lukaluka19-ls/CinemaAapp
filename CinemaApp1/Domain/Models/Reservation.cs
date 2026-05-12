@@ -15,6 +15,6 @@ public class Reservation
 
     public User? User { get; set; }
     public MovieScreening Screening { get; set; } = null!;
-    public ICollection<ReservationSeat> ReservationSeats { get; set; } = new List<ReservationSeat>();
+    public ICollection<Seat> Seats { get; set; } = new List<Seat>();
     public Rating? Rating { get; set; }
 }

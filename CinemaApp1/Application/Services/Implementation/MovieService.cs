@@ -30,7 +30,10 @@ namespace CinemaApp1.Application.Services.Implementation
         {
             var movie = _mapper.Map<Movie>(dto);
             var createdMovie = await repository.AddAsync(movie);
-            return _mapper.Map<MovieResponseDTO>(createdMovie);
+            if (createdMovie != null)
+                return _mapper.Map<MovieResponseDTO>(createdMovie);
+            else
+                throw new Exception("Already Exists");
         }
         public async Task<MovieUpdateDTO> UpdateAsync(int id, MovieUpdateDTO dto)
         {

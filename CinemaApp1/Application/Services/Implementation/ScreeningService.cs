@@ -1,7 +1,9 @@
-﻿using AutoMapper;
+﻿    using AutoMapper;
+using CinemaApp.Domain.Interfaces;
+using CinemaApp.Infrastructure.Repositories.Implementations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using CinemaApp.Domain.Interfaces;
+using NPOI.SS.Formula.Functions;
 
 public class ScreeningService : IScreeningService
 {
@@ -31,7 +33,14 @@ public class ScreeningService : IScreeningService
     {
         var screening = _mapper.Map<MovieScreening>(dto);
         var created = await _screeningRepository.AddAsync(screening);
-        return _mapper.Map<ScreeningResponseDTO>(created);
+
+        //var screening = await screeningRepository.GetByIdAsync(dto.ScreeningId);
+        //foreach (var s in screening)
+        //{
+        //    if (s.)
+        //}
+
+         return _mapper.Map<ScreeningResponseDTO>(created);
     }
 
     public async Task<ScreeningUpdateDTO> UpdateScreeningAsync(int id, ScreeningUpdateDTO dto)

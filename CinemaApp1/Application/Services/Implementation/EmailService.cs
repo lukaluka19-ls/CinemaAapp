@@ -15,7 +15,8 @@ namespace CinemaApp1.Application.Services.Implementation
         }
 
         private async Task SendAsync(string to, string subject, string body)
-        {
+        { /*************************Logika za Email*************************************/
+
             var message = new MimeMessage();
             message.From.Add(MailboxAddress.Parse(_configuration["Email:From"]));
             message.To.Add(MailboxAddress.Parse(to));
