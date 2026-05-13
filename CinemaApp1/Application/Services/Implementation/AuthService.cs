@@ -40,15 +40,21 @@ namespace CinemaApp1.Application.Services.Implementation
             user.IsBlocked = false;
             user.VerificationToken = Guid.NewGuid().ToString("N");
 
+            //if (string.IsNullOrEmpty(dto.Name) &&
+            //    !string.IsNullOrEmpty(dto.Email) &&
+            //    string.IsNullOrEmpty(dto.Password))
+            //{
+            //    throw new Exception("All fileds must be filed");
+
             await _userRepository.AddAsync(user);
 
             var verificationLink = $"{_configuration["AppUrl"]}/api/auth/verify-email?token={user.VerificationToken}";
-            //await _emailService.SendVerificationEmailAsync(new VerificationEmailDTO
-            //{
-            //    To = user.Email,
-            //    UserName = user.Name,
-            //    VerificationLink = verificationLink
-            //});
+            await _emailService.SendVerificationEmailAsync(new VerificationEmailDTO
+            {
+                To = user.Email,
+                UserName = user.Name,
+                VerificationLink = verificationLink
+            });
 
             return true;
         }

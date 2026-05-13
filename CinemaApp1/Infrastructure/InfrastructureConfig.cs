@@ -21,6 +21,7 @@ namespace CinemaApp1.Infrastructure
                 options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
             // Repositories
+            services.AddHttpContextAccessor();
             services.AddScoped<IGenreRepository, GenreRepository>();
             services.AddScoped<IMovieRepository, MovieRepository>();
             services.AddScoped<IScreeningRepository, ScreeningRepository>();
@@ -40,6 +41,7 @@ namespace CinemaApp1.Infrastructure
             services.AddScoped<IScreeningService, ScreeningService>();
             services.AddScoped<ISeatService, SeatService>();
             services.AddScoped<IReservationService, ReservationService>();
+            services.AddScoped<IUsersService, UsersService>();
         }
     }
 }

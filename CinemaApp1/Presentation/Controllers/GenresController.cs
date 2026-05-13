@@ -32,7 +32,7 @@ namespace CinemaApp1.Presentation.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([FromBody] GenreCreateDTO dto)
         {
             if (!ModelState.IsValid)

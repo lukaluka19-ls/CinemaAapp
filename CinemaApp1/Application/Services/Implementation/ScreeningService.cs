@@ -34,11 +34,9 @@ public class ScreeningService : IScreeningService
         var screening = _mapper.Map<MovieScreening>(dto);
         var created = await _screeningRepository.AddAsync(screening);
 
-        //var screening = await screeningRepository.GetByIdAsync(dto.ScreeningId);
-        //foreach (var s in screening)
-        //{
-        //    if (s.)
-        //}
+        var exists = await _screeningRepository.AnyAsync(x => x.MovieId == dto.MovieId);
+            if (exists)
+                throw new Exception("Screening with that movie ID allready exists");
 
          return _mapper.Map<ScreeningResponseDTO>(created);
     }

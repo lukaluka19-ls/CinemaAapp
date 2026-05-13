@@ -18,16 +18,18 @@ namespace CinemaApp1.Application.Services.Implementation
         { /*************************Logika za Email*************************************/
 
             var message = new MimeMessage();
-            message.From.Add(MailboxAddress.Parse(_configuration["Email:From"]));
+            var from = _configuration["Email:From"];
+            var username = _configuration["Email:Username"];
+            var password = _configuration["Email:Password"];
+
+            message.From.Add(MailboxAddress.Parse(from));
             message.To.Add(MailboxAddress.Parse(to));
             message.Subject = subject;
             message.Body = new TextPart("plain") { Text = body };
 
             using var smtp = new SmtpClient();
             await smtp.ConnectAsync("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
-            await smtp.AuthenticateAsync(
-                _configuration["Email:Username"],
-                _configuration["Email:Password"]);
+            await smtp.AuthenticateAsync(username, password);
             await smtp.SendAsync(message);
             await smtp.DisconnectAsync(true);
         }

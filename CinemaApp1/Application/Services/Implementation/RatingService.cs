@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CinemaApp.Domain.Interfaces;
+using CinemaApp.Infrastructure.Repositories.Implementations;
 using CinemaApp1.Application.Mapping;
 using CinemaApp1.Application.Services.Interfaces;
 
@@ -32,6 +33,11 @@ namespace CinemaApp1.Application.Services.Implementation
         {
             var rating = _mapper.Map<Rating>(dto);
             var createdRating = await _ratingRepository.AddAsync(rating);
+
+            var exists = await _ratingRepository.AnyAsync(x => x.ReservationId == dto.ReservationId);
+            if (exists)
+                throw new Exception("That reservation allready gave a rating");
+
             return _mapper.Map<RatingResponseDTO>(createdRating);
         }
 

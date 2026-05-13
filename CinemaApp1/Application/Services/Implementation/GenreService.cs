@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CinemaApp.Domain.Interfaces;
+using CinemaApp1.Application.Exceptions;
 using CinemaApp1.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 
@@ -29,6 +30,10 @@ namespace CinemaApp1.Application.Services.Implementation
         }
         public async Task<GenreResponseDTO> CreateAsync(GenreCreateDTO dto)
         {
+            var exists = await repository.AnyAsync(x => x.Name == dto.Name);
+            if (exists)
+                throw new UnprocessableException("This Genre allready exists!");
+
             var genre = _mapper.Map<Genre>(dto);
             await repository.AddAsync(genre);
             return _mapper.Map<GenreResponseDTO>(genre);

@@ -1,3 +1,4 @@
+using CinemaApp.Presentation.Middleware;
 using CinemaApp1.Application.Mapping;
 using CinemaApp1.Application.Services.Implementation;
 using CinemaApp1.Application.Services.Interfaces;
@@ -5,6 +6,7 @@ using CinemaApp1.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
+using CinemaApp.Presentation.Middleware;
 using System.Text;
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
@@ -17,7 +19,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
 //builder.Services.AddAutoMapper(typeof(MappingProfile));
 
+
+
 builder.Services.ConfigureInfrastructure(builder.Configuration);
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddAuthentication(options =>
 {
@@ -56,6 +61,12 @@ builder.Services.AddScoped<IUserContext, UserContext>();
 
 var app = builder.Build();
 
+app.UseMiddleware<GlobalExceptionHandler>();
+app.UseMiddleware<BlockedUserMiddleware>();
+
+//app.UseMiddleware<BlockedUserMiddleware>();
+
+
 app.MapOpenApi();
 app.MapScalarApiReference(options =>
 {
@@ -68,6 +79,7 @@ app.MapScalarApiReference(options =>
 
 );
 
+app.UseMiddleware<GlobalExceptionHandler>();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
