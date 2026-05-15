@@ -1,0 +1,40 @@
+REACT COURSE
+Functional components
+JSX - Skriven javascript(optional) ne mozes da pise attribute ali moras da pises u camel style npr userConst
+CurlyBraces - prihvataju vrednosti kao stringove ili intidzere
+Fragments - Funkcionisu tako sto u JSX kodu moramo staviti return(<>?DEO KODA?</>)
+Props - Sluzi da proledimo podatak bez prosledjivanja vrednosti direkntno nego vec implementirane npr.(<Hello text={'yo'}/>) Upotreba propa function Greeting(props){
+  return <h1>{props.text}</h1>
+}
+Children Prop - <Parent><Child/></Parent> Primer function Parent(props){ return<div>{props.children}</div> ~ Dobro za Composition
+Key prop - Built in funckija koja se koristi da react moze da razlikuje jednu komponentu od druge expl. key={1} or key="asdf"
+Rendering - Koristi DOM funkciju koja prolazi korz stranicu i poredi stvari koje su se promenile i menja samo NJIH i nista vise ima 3 stepa 1
+State changed? Sta se promenilo
+React "diffs"? Komperuje default vrednost sa promenjenom
+Reconciliatin? Update SAMO ONO STO S EPROMENILO
+Event Handling - Znati sta raditi sa tim reakcijama znaci nesto elementarno(onClick,onChange,onSubmit) koja je u 99% slucajeva povezana sa funkcijom 
+State - Snapshot/Slika nase aplikacije u tom trenutnku, ne mozemo koristiti javascript nego vec koristimo built in funckije kao sto su useState(), useReducer() etc... 
+Use state prima 1 argument ali koristi 2(Trenutno stanje(state) toga i njegovo update stanje
+Controlled components - Kako funckionise? [1. User kuca i postavlja vrenodst,2. Stanje vrednosti je azurirano,3. Input cita iz stanja]
+Hooks - pomaze nam da "hookujemo" state koji nam treba koji se dodaje komponentama
+useState(), useReducer() - Menadzer stanja 
+useContext() - koristi podatke koje su posle kroz kontekst
+useRef() - "referenca" na HTML
+useEffect() - spoljasni stistem
+useMemo(),useCallback() - koristi se za brzinu izvrsavanja aplikacije
+Purity - Bukvalno znaci da same input mora biti i same output sto znaci da
+Samo vracaj JSX
+Da se ne menjaju stvari koje su postojale pre rederovanja
+Strict mode - Prosto receno Alert component
+Effects - Deo coda koji dohvata van react aplikacije
+Ref - Referenca nekog elementa umesto trenutnog definisanja
+Context - 
+Napravi tvoj kontekst - const AppContext = createContext()
+Umotaj provajdersku komponentu - <AppContext.Provder> <App/> </AppContext.Provider>
+Stavi vrednost te provajderske komponente - <AppContext.Provider value="Hi">
+Dohvati podatak koristeci useContext - const text = useContext(AppContext)
+Portali - Kako se pravi portal? 
+iskoriti portalsku funckiju - createPortal()
+Stavi sta zelis da prosledis u toj funckiji
+I stavis u kom delu projekta bi zeleo to da vidis
+Suspense - Uglavnom se koristi za usporeno ucitavanje podataka - ucitavanje podataka SAMO i SAMO kad su potrebni
