@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { LoginDTO, RegisterDTO } from "../../../types";
-import { login } from "../../../api/auth";
-import slika from "../../../img/slika.webp";
+import { login, register } from "../../../api/auth";
+import slika from "../../../img/slika.jpg";
+import { Navigate } from "react-router-dom";
 
 interface Props {}
 
@@ -20,6 +21,7 @@ export const RegisterForm = (props: Props) => {
     date: "",
   });
 
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, title } = event.target;
     console.log(name, value);
@@ -30,6 +32,27 @@ export const RegisterForm = (props: Props) => {
         [name]: value,
       };
     });
+  };
+
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+const handleSubmit = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      await register({
+        name: user.username,
+        dateOfBirth: user.date,
+        email: user.email,
+        password: user.password,
+      });
+      Navigate("/login");
+    } catch {
+      setError("Registration failed. Email may already exist.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -78,7 +101,7 @@ export const RegisterForm = (props: Props) => {
             className="w-full p-3 rounded-xl bg-white border border-black"
           />
           <button
-            // onClick={}
+            onClick={handleSubmit}
             className="w-full bg-black rounded-xl hover:bg-blue-700 text-white font-bold py-2"
           >
             Register

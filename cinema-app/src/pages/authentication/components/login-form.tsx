@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { LoginDTO } from "../../../types";
 import { login } from "../../../api/auth";
 import { useNavigate } from "react-router-dom";
-import slika from "../../../img/slika.webp";
+import slika from "../../../img/slika.jpg";
 interface Props {}
 
 export const LoginForm = (props: Props) => {
