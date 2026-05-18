@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { LoginDTO } from "../../../types";
 import { login } from "../../../api/auth";
-
+import { useNavigate } from "react-router-dom";
+import slika from "../../../img/slika.webp";
 interface Props {}
 
 export const LoginForm = (props: Props) => {
+  const navigate = useNavigate();
+
   const [user, setUser] = useState<LoginDTO>({
     password: "",
     email: "",
@@ -27,8 +30,7 @@ export const LoginForm = (props: Props) => {
       .then((res) => {
         // upisati u local storage
         localStorage.setItem("token", res.token);
-
-        return user;
+        navigate("/");
       })
       .catch((err) => {
         console.log(err);
@@ -52,8 +54,13 @@ export const LoginForm = (props: Props) => {
 
   return (
     // <div className="object-cover">
-    <div className="bg-transparent flex justify-end items-center pr-36 pt-36 content-center">
-      <div className="bg-white p-10 rounded-3xl shadow-2xl border-gray-50">
+    <div
+      className="flex flex-col items-end p-36 min-h-screen w-full bg-cover bg-center"
+      style={{
+        backgroundImage: `url('${slika}')`,
+      }}
+    >
+      <div className="bg-white w-3/12 items-center p-10 rounded-3xl shadow-2xl border border-gray-50">
         <h2 className="text-4xl font-serif text-black mb-6 text-center">
           Welcome back
         </h2>
@@ -81,13 +88,14 @@ export const LoginForm = (props: Props) => {
           >
             Login
           </button>
-          <div className="flex:flex-col">
-            <h2 className="pl-36">Dont't have an account?</h2>
-            <h3 className="pl-48">Register</h3>
+          <div className="text-center">
+            <h2>Already have an account?</h2>
+            <a href="/register" className="text-black hover:text-blue-700">
+              <h3>Register</h3>
+            </a>
           </div>
         </div>
       </div>
     </div>
-    // </div>
   );
 };

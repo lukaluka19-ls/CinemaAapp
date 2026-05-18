@@ -11,6 +11,8 @@ using System.Text;
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -18,6 +20,18 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddOpenApi();
 //builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+    policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
 
 
 
@@ -62,26 +76,19 @@ builder.Services.AddScoped<IUserContext, UserContext>();
 var app = builder.Build();
 
 app.UseMiddleware<GlobalExceptionHandler>();
-app.UseMiddleware<BlockedUserMiddleware>();
-
-//app.UseMiddleware<BlockedUserMiddleware>();
-
 
 app.MapOpenApi();
 app.MapScalarApiReference(options =>
 {
     options.Title = "CinemaApp1 API Reference";
     options.Theme = ScalarTheme.DeepSpace;
-    //options.Description = "API reference for CinemaApp1";
-    //options.Version = "v1.0";
     options.CustomCss = "";
-}
+});
 
-);
-
-app.UseMiddleware<GlobalExceptionHandler>();
 app.UseHttpsRedirection();
-app.UseAuthentication();
-app.UseAuthorization();
+app.UseCors(MyAllowSpecificOrigins);    
+app.UseAuthentication();                 
+app.UseAuthorization();                   
+app.UseMiddleware<BlockedUserMiddleware>();
 app.MapControllers();
 app.Run();
