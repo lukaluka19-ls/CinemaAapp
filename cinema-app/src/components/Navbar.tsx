@@ -12,7 +12,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="w-full bg-gray-900 text-white px-6 py-4 flex items-center justify-between shadow-md font-serif">
+    <nav className="w-full bg-black text-white px-6 py-4 flex items-center justify-between shadow-md font-serif">
       <div className="flex items-center gap-7">
         <Link
           to="/"
@@ -20,9 +20,9 @@ const Navbar: React.FC = () => {
         >
           CinemaApp
         </Link>
-        <Link to="/" className="hover:text-gray-300">
+        {/* <Link to="/" className="hover:text-gray-300">
           Home
-        </Link>
+        </Link> */}
         <Link to="/movies" className="hover:text-gray-300">
           Movies
         </Link>

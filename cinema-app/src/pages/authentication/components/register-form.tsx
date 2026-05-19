@@ -5,6 +5,12 @@ import slika2 from "../../../img/slika2.jpg";
 import slika3 from "../../../img/slika3.jpg";
 import slika4 from "../../../img/slika4.jpg";
 import slika5 from "../../../img/slika5.jpg";
+import slika6 from "../../../img/slika6.jpg";
+import slika8 from "../../../img/slika8.jpg";
+import slika9 from "../../../img/slika9.jpg";
+import slika10 from "../../../img/slika10.jpg";
+import slika11 from "../../../img/slika11.jpg";
+
 import { Navigate, useNavigate } from "react-router-dom";
 
 interface Props {}
@@ -24,7 +30,17 @@ export const RegisterForm = (props: Props) => {
     date: "",
   });
 
-  const images = [slika3, slika2, slika4, slika5];
+  const images = [
+    slika10,
+    slika8,
+    slika9,
+    slika11,
+    slika6,
+    slika3,
+    slika2,
+    slika4,
+    slika5,
+  ];
   const [currentImage, setCurrentImage] = useState(0);
 
   useEffect(() => {
@@ -85,8 +101,8 @@ export const RegisterForm = (props: Props) => {
         />
       ))}
 
-      <div className="relative z-10 flex flex-col items-end p-36 min-h-screen w-full font-serif">
-        <div className="bg-white w-3/12 items-center p-10 rounded-3xl shadow-2xl border border-gray-50">
+      <div className="relative z-10 flex flex-col items-end content-center justify-center min-h-screen w-full pb-16 pr-16">
+        <div className="bg-white w-3/12 items-center p-10 rounded-3xl shadow-2xl border border-gray-50 bg-opacity-70">
           <h2 className="text-4xl font-serif text-black mb-6 text-center">
             Register
           </h2>
@@ -98,7 +114,7 @@ export const RegisterForm = (props: Props) => {
               placeholder="Username"
               value={user?.username}
               onChange={handleChange}
-              className="w-full p-3 rounded-xl bg-white border border-black"
+              className="w-full p-3 rounded-xl bg-white border"
             />
             <input
               type="date"
@@ -106,7 +122,7 @@ export const RegisterForm = (props: Props) => {
               placeholder="Date of birth"
               value={user?.date}
               onChange={handleChange}
-              className="w-full p-3 rounded-xl bg-white border border-black"
+              className="w-full p-3 rounded-xl bg-white border"
             />
             <input
               name="email"
@@ -114,7 +130,7 @@ export const RegisterForm = (props: Props) => {
               placeholder="Email"
               value={user?.email}
               onChange={handleChange}
-              className="w-full p-3 rounded-xl bg-white border border-black"
+              className="w-full p-3 rounded-xl bg-white border"
             />
             <input
               name="password"
@@ -122,15 +138,15 @@ export const RegisterForm = (props: Props) => {
               placeholder="Password"
               value={user?.password}
               onChange={handleChange}
-              className="w-full p-3 rounded-xl bg-white border border-black"
+              className="w-full p-3 rounded-xl bg-white border"
             />
             <button
               onClick={handleSubmit}
-              className="w-full bg-black rounded-xl hover:bg-blue-700 text-white font-bold py-2"
+              className="w-full rounded-2xl bg-blue-700 hover:bg-blue-800 text-white font-bold py-2"
             >
               Register
             </button>
-            <div className="text-center">
+            <div className="text-center flex flex-col font-medium font-serif">
               <h2>Already have an account?</h2>
               <a href="/login" className="text-black hover:text-blue-700">
                 <button onClick={login}>
