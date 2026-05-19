@@ -55,17 +55,19 @@ type Status = "Available" | "Occupied";
 export interface Seat {
   id: number;
   seatNumber: number;
-  status: Status; // "Available", "Occupied"
+  status: Status;
 }
 
 export interface Reservation {
   id: number;
   uniqueCode: string;
   movieName: string;
-  screeningDateTime: string;
-  totalPrice: number;
-  isPast: boolean;
-  isCanceled: boolean;
+  dateTime: string;
+  ticketPrice: number;
+  totalSeats: number;
+  // isPast: boolean;
+  // isCanceled: boolean;
+  availableSeats: boolean;
   rating: number | null;
 }
 
