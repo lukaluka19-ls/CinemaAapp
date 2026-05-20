@@ -28,6 +28,24 @@ export interface Genre {
   name: string;
 }
 
+export interface GenreResponse {
+  id: number;
+  name: string;
+}
+export interface GenreRequest {
+  name: string;
+}
+export interface GenreResponseID {
+  id: number;
+}
+export interface GenreDelete {
+  id: number;
+}
+export interface GenreUpdateRequest {
+  id: number;
+  name: string;
+}
+
 export interface Movie {
   id: number;
   name: string;
@@ -65,10 +83,21 @@ export interface Reservation {
   dateTime: string;
   ticketPrice: number;
   totalSeats: number;
-  // isPast: boolean;
-  // isCanceled: boolean;
   availableSeats: boolean;
   rating: number | null;
+}
+
+export interface GetReservationById {
+  id: number;
+}
+
+export interface GetReservationResponse {
+  id: number;
+  name: string;
+}
+export interface ReservationRequest {
+  id: Screening;
+  seatId: Seat;
 }
 
 export interface LoginUser {

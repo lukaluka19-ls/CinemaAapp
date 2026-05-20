@@ -30,5 +30,3 @@ export const addMovie = async (
     averageRating,
   });
 };
-
-// export const updateMovie

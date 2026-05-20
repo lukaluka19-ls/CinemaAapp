@@ -1,28 +1,22 @@
 import { api } from "./axios";
-import { Reservation } from "../types";
+import {
+  GetReservationResponse,
+  Reservation,
+  ReservationRequest,
+} from "../types";
 
 export const getAllReservations = async () => {
-  const response = await api.get("/reservations");
-
-  return response.data;
+  return await api.get<GetReservationResponse[]>("/reservations");
 };
 
 export const getReservation = async (id: number) => {
-  const response = await api.get(`/reservations/${id}`);
-
-  return response.data;
+  return await api.get(`/reservations/${id}`);
 };
 
-export const createReservation = async (
-  screeningId: number,
-  seatIds: number,
-) => {
-  await api.post("/reservations", {
-    screeningId,
-    seatIds,
-  });
+export const createReservation = async (request: ReservationRequest) => {
+  await api.post("/reservations", {});
 };
 
 export const deleteReservations = async (id: number) => {
-  await api.delete(`/reservations/${id}`);
+  return await api.delete<void>(`/reservations/${id}`);
 };

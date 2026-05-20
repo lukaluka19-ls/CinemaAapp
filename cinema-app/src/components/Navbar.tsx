@@ -20,6 +20,12 @@ const Navbar: React.FC = () => {
         >
           CinemaApp<span className="text-red-500  ">.</span>
         </Link>
+        {/* <Link to="/" className="hover:text-gray-300">
+          Home
+        </Link> */}
+        {/* <Link to="/movies" className="hover:text-gray-300">
+          Movies
+        </Link> */}
         {auth?.role === "Consumer" && (
           <Link to="/reservations" className="hover:text-gray-300">
             My Reservations

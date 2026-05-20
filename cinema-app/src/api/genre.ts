@@ -1,29 +1,30 @@
-import { Genre } from "../types";
+import {
+  GenreUpdateRequest,
+  GenreResponse,
+  GenreRequest,
+  GenreResponseID,
+} from "../types";
+
 import { api } from "./axios";
 
 export const getAllGenres = async () => {
-  const response = await api.get("/genres");
-
-  return response.data;
+  return await api.get<GenreResponse[]>("/genres");
 };
 
 export const getGenre = async (id: number) => {
-  const response = await api.get(`/genres/${id}`);
-  return response;
+  return await api.get<GenreResponseID>(`/genres/${id}`);
 };
 
-export const createGenre = async (name: string) => {
-  await api.post("/genres", {
-    name,
-  });
+export const createGenre = async (request: GenreRequest) => {
+  return await api.post<GenreResponse>("/genres", request);
 };
 
-export const updateGenre = async (id: number, name: string) => {
-  await api.put(`/genres/${id}`, {
-    name,
+export const updateGenre = async (request: GenreUpdateRequest) => {
+  return await api.put<GenreResponse>(`/genres/${request.id}`, {
+    name: request.name,
   });
 };
 
 export const deleteGenre = async (id: number) => {
-  await api.delete(`/genres/${id}`);
+  return await api.delete<void>(`/genres/${id}`);
 };
