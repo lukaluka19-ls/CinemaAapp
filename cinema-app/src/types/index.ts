@@ -76,6 +76,13 @@ export interface Seat {
   status: Status;
 }
 
+export interface AuthUser {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+}
+
 export interface Reservation {
   id: number;
   uniqueCode: string;

@@ -1,14 +1,14 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
+import { AuthUser } from "../types";
+import { Token } from "typescript";
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  role: string | null;
-  token: string | null;
+  user: AuthUser | null;
   logout: () => void;
   login: (token: string) => void;
 }
-
-// const login = (token: string) =>
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined); //kreiranje konteksta
 
@@ -17,48 +17,51 @@ interface Props {
 }
 
 export const AuthProvider = ({ children }: Props) => {
-  const [token, setToken] = useState<string | null>(
-    localStorage.getItem("token"),
-  ); //koristimo kako bismo je pozvali naknadno i stavljamo je u app.tsx
+  const [user, setUser] = useState<AuthUser | null>(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return null;
+    return jwtDecode<AuthUser>(token);
+  });
 
-  const [role, setRole] = useState<string | null>(null);
+  // useEffect(() => {
+  //   if (token) {
+  //     try {
+  //       const payload = JSON.parse(atob(token.split(".")[1]));
 
-  useEffect(() => {
-    if (token) {
-      try {
-        const payload = JSON.parse(atob(token.split(".")[1]));
-
-        setRole(
-          payload.role ||
-            payload[
-              "http://schemas.microsoft.com/ws/2008/06/identity/claims/role" //trazi microsoft format claimsa koji ima u .Netu uzeto sa gpt iskreno
-            ],
-        );
-      } catch {
-        logout();
-      }
-    }
-  }, [token]); //ceo ovaj tyrcatch gpt generated
+  //       // setRole(
+  //       //   payload.role ||
+  //       //     payload[
+  //       //       "http://schemas.microsoft.com/ws/2008/06/identity/claims/role" //trazi microsoft format claimsa koji ima u .Netu uzeto sa gpt iskreno
+  //       //     ],
+  //       // );
+  //     } catch {
+  //       logout();
+  //     }
+  //   }
+  // }, [token]); //ceo ovaj tyrcatch gpt generated
 
   const logout = () => {
-    localStorage.removeItem("token"); //brise token iz local storage da bi korisnik mogao da baci redirect na main page
-
-    setToken(null); //setuje vrednost tokena na null
-
-    setRole(null); //setuje vrednost rola na null
+    localStorage.removeItem("token");
+    setUser(null);
   };
 
   const login = (token: string) => {
     localStorage.setItem("token", token); //nakndadno dodato
-    setToken(token);
+    const decoded = jwtDecode<AuthUser>(token);
+    setUser(decoded);
   };
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated: !!token, role, token, logout, login }} //pozivanje
+      value={{
+        user,
+        login,
+        logout,
+        isAuthenticated: !!user, //povezivanje
+      }}
     >
       {children}
-    </AuthContext.Provider> //Snabdevanje komponenti podacima (((Provider Return)))
+    </AuthContext.Provider>
   );
 };
 export const useAuth = () => {
@@ -69,3 +72,10 @@ export const useAuth = () => {
   }
   return context;
 };
+
+interface AuthContextType {
+  user: AuthUser | null;
+  login: (token: string) => void;
+  logout: () => void;
+  isAuthenticated: boolean;
+}

@@ -26,17 +26,17 @@ const Navbar: React.FC = () => {
         {/* <Link to="/movies" className="hover:text-gray-300">
           Movies
         </Link> */}
-        {auth?.role === "Consumer" && (
+        {auth?.user?.role === "Consumer" && (
           <Link to="/reservations" className="hover:text-gray-300">
             My Reservations
           </Link>
         )}
-        {auth?.role === "Consumer" && (
+        {auth?.user?.role === "Consumer" && (
           <Link to="/screenings" className="hover:text-gray-300">
             Available Screenings
           </Link>
         )}
-        {auth?.role === "Admin" && (
+        {auth?.user?.role === "Admin" && (
           <Link to="/admin" className="hover:text-gray-300">
             Admin
           </Link>
@@ -55,7 +55,7 @@ const Navbar: React.FC = () => {
         ) : (
           <>
             <span className="text text-red-600 font-bold">
-              {auth.role ?? "User"}
+              {auth.user?.role ?? "User"}
             </span>
 
             <button
