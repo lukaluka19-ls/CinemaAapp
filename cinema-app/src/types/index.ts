@@ -1,4 +1,5 @@
-export interface User {
+// AUTH
+export interface AuthUser {
   id: number;
   name: string;
   email: string;
@@ -28,19 +29,10 @@ export interface Genre {
   name: string;
 }
 
-export interface GenreResponse {
-  id: number;
+export interface GenreCreateRequest {
   name: string;
 }
-export interface GenreRequest {
-  name: string;
-}
-export interface GenreResponseID {
-  id: number;
-}
-export interface GenreDelete {
-  id: number;
-}
+
 export interface GenreUpdateRequest {
   id: number;
   name: string;
@@ -51,63 +43,158 @@ export interface Movie {
   name: string;
   originalName: string;
   duration: number;
-  posterImageUrl: string;
+  posterImageUrl: string | null;
+  genreId: number;
   genreName: string;
   averageRating: number | null;
 }
 
+export interface MovieCreateRequest {
+  name: string;
+  originalName: string;
+  duration: number;
+  genreId: number;
+  posterImage?: File;
+}
+
+export interface MovieUpdateRequest {
+  name?: string;
+  originalName?: string;
+  duration?: number;
+  genreId?: number;
+  posterImage?: File;
+}
+
 export interface Screening {
   id: number;
+  movieId: number;
   movieName: string;
-  posterImageUrl: string;
+  posterImageUrl: string | null;
   genreName: string;
   dateTime: string;
   ticketPrice: number;
+  totalSeats: number;
   availableSeats: number;
   isPast: boolean;
   averageRating: number | null;
 }
 
-type Status = "Available" | "Occupied";
+export interface ScreeningCreateRequest {
+  movieId: number;
+  dateTime: string;
+  ticketPrice: number;
+  totalSeats: number;
+}
+
+export interface ScreeningUpdateRequest {
+  dateTime?: string;
+  ticketPrice?: number;
+  totalSeats?: number;
+}
+
+export interface ScreeningFilter {
+  date?: string;
+  genreId?: number;
+  sortBy?: string;
+  sortOrder?: string;
+  page?: number;
+  pageSize?: number;
+}
+
+type SeatStatus = "Available" | "Occupied" | "Selected";
 
 export interface Seat {
   id: number;
   seatNumber: number;
-  status: Status;
+  status: SeatStatus;
 }
 
-export interface AuthUser {
-  id: number;
-  name: string;
-  email: string;
-  role: string;
+export interface SeatCreateRequest {
+  screeningId: number;
+  seatNumber: number;
 }
 
 export interface Reservation {
   id: number;
   uniqueCode: string;
   movieName: string;
-  dateTime: string;
+  posterImageUrl: string | null;
+  screeningDateTime: string;
   ticketPrice: number;
-  totalSeats: number;
-  availableSeats: boolean;
+  totalPrice: number;
+  discountApplied: boolean;
+  seatNumbers: number[];
+  isCanceled: boolean;
+  isPast: boolean;
   rating: number | null;
 }
 
-export interface GetReservationById {
-  id: number;
+export interface ReservationCreateRequest {
+  screeningId: number;
+  seatIds: number[];
+  guestEmail?: string;
 }
 
-export interface GetReservationResponse {
+export interface ReservationDetail {
+  id: number;
+  uniqueCode: string;
+  movieName: string;
+  posterImageUrl: string | null;
+  screeningDateTime: string;
+  ticketPrice: number;
+  totalPrice: number;
+  discountApplied: boolean;
+  seats: Seat[];
+  isCanceled: boolean;
+  rating: number | null;
+}
+
+export interface Rating {
+  id: number;
+  stars: number;
+  movieName: string;
+  createdAt: string;
+}
+
+export interface RatingCreateRequest {
+  reservationId: number;
+  stars: number;
+}
+
+export interface Consumer {
   id: number;
   name: string;
-}
-export interface ReservationRequest {
-  id: Screening;
-  seatId: Seat;
+  email: string;
+  dateOfBirth: string;
+  isBlocked: boolean;
+  isVerified: boolean;
 }
 
-export interface LoginUser {
-  username: string;
-  password: string;
+export interface ConsumerList {
+  id: number;
+  name: string;
+  email: string;
+  isBlocked: boolean;
+  isVerified: boolean;
+}
+
+export interface PagedResponse<T> {
+  items: T[];
+  totalCount: number;
+  page: number;
+  pageSize: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+}
+
+export interface ApiResponse<T> {
+  success: boolean;
+  message: string | null;
+  data: T | null;
+}
+
+export interface ErrorResponse {
+  statusCode: number;
+  message: string;
 }

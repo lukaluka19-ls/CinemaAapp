@@ -1,32 +1,24 @@
 import { api } from "./axios";
-import { Movie } from "../types";
+import { Movie, MovieCreateRequest, MovieUpdateRequest } from "../types";
 
 export const getAllMovies = async () => {
-  const response = await api.get("/movies");
-
-  return response.data;
+  return await api.get<Movie[]>("/movies");
 };
 
-export const getMovie = async (id: number) => {
-  const response = await api.get(`/movies/${id}`);
-
-  return response.data;
+export const getGenre = async (id: number) => {
+  return await api.get<Movie>(`/movies/${id}`);
 };
 
-export const addMovie = async (
-  name: string,
-  originalName: string,
-  duration: number,
-  posterImageURL: string,
-  genreName: string,
-  averageRating: number,
-) => {
-  await api.post("/movies", {
-    name,
-    originalName,
-    duration,
-    posterImageURL,
-    genreName,
-    averageRating,
-  });
+export const createGenre = async (request: MovieCreateRequest) => {
+  return await api.post<Movie>("/movies", request);
+};
+
+// export const updateGenre = async (request: MovieUpdateRequest) => {
+//   return await api.put<Movie>(`/movies/${request.id}`, {
+//     name: request.name,
+//   });
+// };
+
+export const deleteGenre = async (id: number) => {
+  return await api.delete<void>(`/movies/${id}`);
 };

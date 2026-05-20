@@ -1,20 +1,20 @@
 import { api } from "./axios";
 import {
-  GetReservationResponse,
   Reservation,
-  ReservationRequest,
+  ReservationCreateRequest,
+  ReservationDetail,
 } from "../types";
 
 export const getAllReservations = async () => {
-  return await api.get<GetReservationResponse[]>("/reservations");
+  return await api.get<Reservation[]>("/reservations");
 };
 
-export const getReservation = async (id: number) => {
-  return await api.get(`/reservations/${id}`);
+export const getReservation = async (request: ReservationDetail) => {
+  return await api.get<Reservation>(`/reservations/${request}`);
 };
 
-export const createReservation = async (request: ReservationRequest) => {
-  await api.post("/reservations", {});
+export const createGenre = async (request: ReservationCreateRequest) => {
+  return await api.post<Reservation>("/reservations", request);
 };
 
 export const deleteReservations = async (id: number) => {

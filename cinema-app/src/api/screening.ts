@@ -1,34 +1,17 @@
 import { api } from "./axios";
-import { Screening } from "../types";
+import { Screening, ScreeningCreateRequest } from "../types";
 
 export const getAllScreenings = async () => {
-  const response = await api.get("/movieScreenings");
-
-  return response.data;
+  return await api.get<Screening[]>("/screenings");
 };
 
 export const getScreening = async (id: number) => {
-  const response = await api.get(`/movieScreenings/${id}`);
-
-  return response.data;
+  return await api.get<Screening>(`/screenings/${id}`);
 };
 
-export const createScreening = async (
-  movieId: number,
-  genreName: string,
-  dateTime: string,
-  totalSeats: number,
-  ticketPrice: number,
-  availableSeats: boolean,
-  rating: number | null,
-) => {
-  await api.post("/genres", {
-    movieId,
-    genreName,
-    dateTime,
-    ticketPrice,
-    totalSeats,
-    availableSeats,
-    rating,
-  });
+export const createScreening = async (request: ScreeningCreateRequest) => {
+  return await api.post<Screening>("/screenings", request);
+};
+export const deleteScreening = async (id: number) => {
+  return await api.delete<void>(`/screenings/${id}`);
 };
