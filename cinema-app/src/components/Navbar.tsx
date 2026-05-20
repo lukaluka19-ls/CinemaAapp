@@ -12,19 +12,13 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="w-full bg-black text-white px-6 py-4 flex items-center justify-between shadow-md font-serif">
+    <nav className="w-full bg-black text-white px-6 py-4 flex items-center justify-between shadow-md font-bold px-10">
       <div className="flex items-center gap-7">
         <Link
           to="/"
-          className="text-xl font-bold text-red-600 hover:text-red-700"
+          className="text-white text-2xl font-bold tracking-tight hover:opacity-80 transition-opacity"
         >
-          CinemaApp
-        </Link>
-        {/* <Link to="/" className="hover:text-gray-300">
-          Home
-        </Link> */}
-        <Link to="/movies" className="hover:text-gray-300">
-          Movies
+          CinemaApp<span className="text-red-500  ">.</span>
         </Link>
         {auth?.role === "Consumer" && (
           <Link to="/reservations" className="hover:text-gray-300">
@@ -70,5 +64,4 @@ const Navbar: React.FC = () => {
     </nav>
   );
 };
-
 export default Navbar;
