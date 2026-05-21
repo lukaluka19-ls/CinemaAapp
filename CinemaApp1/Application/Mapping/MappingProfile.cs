@@ -90,6 +90,7 @@ public class MappingProfile : Profile
 
         CreateMap<User, UserResponseDTO>();
         CreateMap<User, UserListDTO>();
+        CreateMap<User, AuthResponseDto>();
 
         CreateMap<Rating, RatingResponseDTO>()
             .ForMember(dest => dest.MovieName,

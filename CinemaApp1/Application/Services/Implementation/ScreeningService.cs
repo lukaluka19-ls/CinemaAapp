@@ -28,7 +28,6 @@ public class ScreeningService : IScreeningService
         if (screening == null) return null;
         return _mapper.Map<ScreeningResponseDTO>(screening);
     }
-
     public async Task<ScreeningResponseDTO> CreateScreeningAsync(ScreeningCreateDTO dto)
     {
         var screening = _mapper.Map<MovieScreening>(dto);

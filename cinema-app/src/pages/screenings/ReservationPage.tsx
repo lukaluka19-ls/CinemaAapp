@@ -84,111 +84,111 @@ export const ReservationPage = () => {
         <p className="text-white text-xl">Screening not found.</p>
       </div>
     );
-  // return (
-  //   <div
-  //     className="min-h-screen bg-cover bg-center relative"
-  //     style={{
-  //       backgroundImage: screening.posterImageUrl
-  //         ? `url(${screening.posterImageUrl})`
-  //         : undefined,
-  //     }}
-  //   >
-  //     <div className="absolute inset-0 bg-black bg-opacity-70" />
+  return (
+    <div
+      className="min-h-screen bg-cover bg-center relative"
+      style={{
+        backgroundImage: screening.posterImageUrl
+          ? `url(${screening.posterImageUrl})`
+          : undefined,
+      }}
+    >
+      <div className="absolute inset-0 bg-black bg-opacity-70" />
 
-  //     <div className="relative z-10 flex flex-col items-center p-8">
-  //       <h1 className="text-4xl font-bold text-white mb-2">
-  //         {screening.movieName}
-  //       </h1>
-  //       <p className="text-gray-300 mb-8">
-  //         {new Date(screening.dateTime).toLocaleString()} •{" "}
-  //         {screening.genreName}
-  //       </p>
+      <div className="relative z-10 flex flex-col items-center p-8">
+        <h1 className="text-4xl font-bold text-white mb-2">
+          {screening.movieName}
+        </h1>
+        <p className="text-gray-300 mb-8">
+          {new Date(screening.dateTime).toLocaleString()} •{" "}
+          {screening.genreName}
+        </p>
 
-  //       <div className="flex gap-12 w-full max-w-6xl">
-  //         <div className="flex-1">
-  //           <h2 className="text-white text-xl font-bold mb-4 text-center">
-  //             Seats
-  //           </h2>
+        <div className="flex gap-12 w-full max-w-6xl">
+          <div className="flex-1">
+            <h2 className="text-white text-xl font-bold mb-4 text-center">
+              Seats
+            </h2>
 
-  //           <div className="w-full h-2 bg-white rounded-full mb-6 opacity-50" />
-  //           <p className="text-center text-gray-400 mb-6 text-sm">SCREEN</p>
+            <div className="w-full h-2 bg-white rounded-full mb-6 opacity-50" />
+            <p className="text-center text-gray-400 mb-6 text-sm">SCREEN</p>
 
-  //           <div className="grid grid-cols-10 gap-2">
-  //             {seats.map((seat) => (
-  //               <button
-  //                 key={seat.id}
-  //                 onClick={() => toggleSeat(seat)}
-  //                 disabled={seat.status === "Occupied"}
-  //                 className={`w-8 h-8 rounded-md text-xs font-bold text-black transition ${getSeatColor(seat)}`}
-  //               >
-  //                 {seat.seatNumber}
-  //               </button>
-  //             ))}
-  //           </div>
+            <div className="grid grid-cols-10 gap-2">
+              {seats.map((seat) => (
+                <button
+                  key={seat.id}
+                  onClick={() => toggleSeat(seat)}
+                  disabled={seat.status === "Occupied"}
+                  className={`w-8 h-8 rounded-md text-xs font-bold text-black transition ${getSeatColor(seat)}`}
+                >
+                  {seat.seatNumber}
+                </button>
+              ))}
+            </div>
 
-  //           <div className="flex gap-6 mt-6 justify-center">
-  //             <div className="flex items-center gap-2">
-  //               <div className="w-4 h-4 bg-green-500 rounded" />
-  //               <span className="text-gray-300 text-sm">Vacant</span>
-  //             </div>
-  //             <div className="flex items-center gap-2">
-  //               <div className="w-4 h-4 bg-red-500 rounded" />
-  //               <span className="text-gray-300 text-sm">Occupied</span>
-  //             </div>
-  //             <div className="flex items-center gap-2">
-  //               <div className="w-4 h-4 bg-white rounded" />
-  //               <span className="text-gray-300 text-sm">Selected</span>
-  //             </div>
-  //           </div>
-  //         </div>
+            <div className="flex gap-6 mt-6 justify-center">
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-green-500 rounded" />
+                <span className="text-gray-300 text-sm">Vacant</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-red-500 rounded" />
+                <span className="text-gray-300 text-sm">Occupied</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-white rounded" />
+                <span className="text-gray-300 text-sm">Selected</span>
+              </div>
+            </div>
+          </div>
 
-  //         <div className="bg-black bg-opacity-60 rounded-2xl p-6 w-72 h-fit">
-  //           <h2 className="text-white text-xl font-bold mb-4">
-  //             {screening.movieName}
-  //           </h2>
-  //           <div className="space-y-2 text-gray-300 text-sm mb-6">
-  //             <p>Movie genre: {screening.genreName}</p>
-  //             <p>Selected seats: {selectedSeats.length}</p>
-  //             <p>Price per seat: ${screening.ticketPrice}</p>
-  //             {user && <p className="text-green-400">5% discount applied!</p>}
-  //             <p className="text-white text-lg font-bold mt-4">
-  //               Final price: ${totalPrice().toFixed(2)}
-  //             </p>
-  //           </div>
+          <div className="bg-black bg-opacity-60 rounded-2xl p-6 w-72 h-fit">
+            <h2 className="text-white text-xl font-bold mb-4">
+              {screening.movieName}
+            </h2>
+            <div className="space-y-2 text-gray-300 text-sm mb-6">
+              <p>Movie genre: {screening.genreName}</p>
+              <p>Selected seats: {selectedSeats.length}</p>
+              <p>Price per seat: ${screening.ticketPrice}</p>
+              {user && <p className="text-green-400">5% discount applied!</p>}
+              <p className="text-white text-lg font-bold mt-4">
+                Final price: ${totalPrice().toFixed(2)}
+              </p>
+            </div>
 
-  //           {!user && (
-  //             <input
-  //               type="email"
-  //               placeholder="Your email (guest)"
-  //               value={guestEmail}
-  //               onChange={(e) => setGuestEmail(e.target.value)}
-  //               className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 mb-4"
-  //             />
-  //           )}
+            {!user && (
+              <input
+                type="email"
+                placeholder="Your email (guest)"
+                value={guestEmail}
+                onChange={(e) => setGuestEmail(e.target.value)}
+                className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 mb-4"
+              />
+            )}
 
-  //           {error && <p className="text-red-400 text-sm mb-2">{error}</p>}
-  //           {success && (
-  //             <p className="text-green-400 text-sm mb-2">{success}</p>
-  //           )}
+            {error && <p className="text-red-400 text-sm mb-2">{error}</p>}
+            {success && (
+              <p className="text-green-400 text-sm mb-2">{success}</p>
+            )}
 
-  //           <div className="flex gap-2">
-  //             <button
-  //               onClick={() => navigate(-1)}
-  //               className="flex-1 bg-gray-600 hover:bg-gray-500 text-white py-2 rounded-lg transition"
-  //             >
-  //               Back
-  //             </button>
-  //             <button
-  //               onClick={handleReserve}
-  //               disabled={selectedSeats.length === 0}
-  //               className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white py-2 rounded-lg transition"
-  //             >
-  //               Reserve
-  //             </button>
-  //           </div>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
+            <div className="flex gap-2">
+              <button
+                onClick={() => navigate(-1)}
+                className="flex-1 bg-gray-600 hover:bg-gray-500 text-white py-2 rounded-lg transition"
+              >
+                Back
+              </button>
+              <button
+                onClick={handleReserve}
+                disabled={selectedSeats.length === 0}
+                className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white py-2 rounded-lg transition"
+              >
+                Reserve
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
