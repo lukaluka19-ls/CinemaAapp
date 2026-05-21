@@ -5,18 +5,25 @@ import {
   ReservationDetail,
 } from "../types";
 
-export const getAllReservations = async () => {
-  return await api.get<Reservation[]>("/reservations");
+export const getReservationById = async (
+  id: number,
+): Promise<ReservationDetail> => {
+  const response = await api.get<ReservationDetail>(`/reservations/${id}`);
+  return response.data;
 };
 
-export const getReservation = async (request: ReservationDetail) => {
-  return await api.get<Reservation>(`/reservations/${request}`);
+export const getMyReservations = async (): Promise<Reservation[]> => {
+  const reposne = await api.get<Reservation[]>(`/reservations/my`);
+  return reposne.data;
 };
 
-export const createGenre = async (request: ReservationCreateRequest) => {
-  return await api.post<Reservation>("/reservations", request);
+export const createReservation = async (
+  dto: ReservationCreateRequest,
+): Promise<Reservation> => {
+  const response = await api.post<Reservation>("/reservations", dto);
+  return response.data;
 };
 
-export const deleteReservations = async (id: number) => {
-  return await api.delete<void>(`/reservations/${id}`);
+export const cancleReservation = async (id: number): Promise<void> => {
+  await api.delete<void>(`/response/${id}`);
 };

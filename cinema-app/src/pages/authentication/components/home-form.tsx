@@ -60,14 +60,6 @@ export const HomeForm = () => {
   ];
   const [currentImage, setCurrentImage] = useState(0);
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setCurrentImage((prev) => (prev + 1) % images.length);
-  //   }, 4000);
-
-  //   return () => clearInterval(interval);
-  // }, []);
-
   return (
     <div>
       <Navbar />
