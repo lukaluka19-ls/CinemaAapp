@@ -1,3 +1,3 @@
 export * from "./login-form";
 export * from "./register-form";
-export * from "./home-form";
+export * from "./home"

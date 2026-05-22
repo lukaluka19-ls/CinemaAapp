@@ -39,5 +39,12 @@ namespace CinemaApp1.Presentation.Controllers
             var created = await _seatService.CreateSeatAsync(dTO);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
+
+        [HttpGet("screening/{screeningId}")]
+        public async Task<IActionResult> GetByScreeningId(int screeningId)
+        {
+            var seats = await _seatService.GetByScreeningIdAsync(screeningId);
+            return Ok(seats);
+        }
     }
 }

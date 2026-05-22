@@ -19,7 +19,7 @@ public class SeatService : ISeatService
         return _mapper.Map<IEnumerable<SeatResponseDTO>>(seats);
     }
 
-    public async Task<IEnumerable<SeatResponseDTO>> GetAvailableByScreeningIdAsync(int screeningId)
+    public async Task<IEnumerable<SeatResponseDTO>> GetByScreeningIdAsync(int screeningId)
     {
         var seats = await _seatRepository.GetAvailableSeatsByScreeningIdAsync(screeningId);
         return _mapper.Map<IEnumerable<SeatResponseDTO>>(seats);
