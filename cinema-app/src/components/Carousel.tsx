@@ -25,7 +25,7 @@ const images = [
   slika11,
 ];
 
-const BackgroundSlider: React.FC<Props> = ({ children }) => {
+export const BackgroundSlider: React.FC<Props> = ({ children }) => {
   const [currentImage, setCurrentImage] = useState(0);
 
   useEffect(() => {
@@ -55,4 +55,3 @@ const BackgroundSlider: React.FC<Props> = ({ children }) => {
   );
 };
 
-export default BackgroundSlider;

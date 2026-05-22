@@ -3,7 +3,7 @@ import { LoginDTO, RegisterDTO } from "../../../types";
 import { login, register } from "../../../api/auth";
 
 import { Navigate, useNavigate } from "react-router-dom";
-import BackgroundSlider from "../../../components/Carousel";
+import { BackgroundSlider } from "../../../components/Carousel";
 
 interface Props {}
 

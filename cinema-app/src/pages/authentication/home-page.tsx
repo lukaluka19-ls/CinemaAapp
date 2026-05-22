@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { HomeForm } from "./components";
+import { Home } from "./components";
 
 export const HomePage = () => {
-  return <HomeForm />;
+  return <Home />;
 };

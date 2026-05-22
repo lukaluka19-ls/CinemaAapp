@@ -23,32 +23,15 @@ export const AuthProvider = ({ children }: Props) => {
     return jwtDecode<AuthUser>(token);
   });
 
-  // useEffect(() => {
-  //   if (token) {
-  //     try {
-  //       const payload = JSON.parse(atob(token.split(".")[1]));
-
-  //       // setRole(
-  //       //   payload.role ||
-  //       //     payload[
-  //       //       "http://schemas.microsoft.com/ws/2008/06/identity/claims/role" //trazi microsoft format claimsa koji ima u .Netu uzeto sa gpt iskreno
-  //       //     ],
-  //       // );
-  //     } catch {
-  //       logout();
-  //     }
-  //   }
-  // }, [token]); //ceo ovaj tyrcatch gpt generated
-
   const logout = () => {
     localStorage.removeItem("token");
     setUser(null);
   };
 
   const login = (token: string) => {
-    localStorage.setItem("token", token); //nakndadno dodato
     const decoded = jwtDecode<AuthUser>(token);
     setUser(decoded);
+    localStorage.setItem("token", token); //nakndadno dodato
   };
 
   return (

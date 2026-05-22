@@ -35,10 +35,13 @@ namespace CinemaApp1.Presentation.Controllers
 
         [HttpPost]
         //[Authorize(Roles = "Consumer")]
-        public async Task<IActionResult> Create(CreateReservationDTO dto)
+        public async Task<IActionResult> Create([FromBody] CreateReservationDTO dTO)
         {
-            var created = await _reservationService.CreateAsync(dto);
-            return Ok(created);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var created = await _reservationService.CreateAsync(dTO);
+            return CreatedAtRoute(nameof(GetById), new { id = created.Id, seatid = created.SeatNumbers}, created);
         }
 
         [HttpGet("{id}")]

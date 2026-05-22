@@ -4,7 +4,7 @@ import { login } from "../../../api/auth";
 import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../../context/AuthContext";
-import BackgroundSlider from "../../../components/Carousel";
+import {BackgroundSlider} from "../../../components/Carousel";
 
 interface Props {}
 

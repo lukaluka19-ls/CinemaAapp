@@ -88,7 +88,7 @@ export const ScreeningsPage = () => {
 
             <div className="text-right">
               <p className="text-white text-2xl font-bold">
-                ${screening.ticketPrice}
+                {screening.ticketPrice}RSD
               </p>
               <p className="text-gray-400">
                 {screening.availableSeats} seats left

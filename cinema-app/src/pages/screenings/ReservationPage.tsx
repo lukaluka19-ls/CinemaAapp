@@ -149,10 +149,10 @@ export const ReservationPage = () => {
             <div className="space-y-2 text-gray-300 text-sm mb-6">
               <p>Movie genre: {screening.genreName}</p>
               <p>Selected seats: {selectedSeats.length}</p>
-              <p>Price per seat: ${screening.ticketPrice}</p>
+              <p>Price per seat: {screening.ticketPrice}RSD</p>
               {user && <p className="text-green-400">5% discount applied!</p>}
               <p className="text-white text-lg font-bold mt-4">
-                Final price: ${totalPrice().toFixed(2)}
+                Final price: {totalPrice().toFixed(2)}RSD
               </p>
             </div>
 
